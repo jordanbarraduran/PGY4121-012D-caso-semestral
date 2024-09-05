@@ -1,0 +1,7 @@
+{
+  "name": "CasoSemestral",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
