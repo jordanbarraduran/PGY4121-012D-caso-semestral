@@ -56,7 +56,7 @@ export class LoginPage implements OnInit {
     private router: Router,
     private toastController: ToastController,
   ) {
-    this.welcomeMessage = '¡Bienvenid@!';
+    this.welcomeMessage = '¡Bienvenid@ a ';
     this.subMessage = 'Nos alegra verte otra vez 😊';
   }
 
