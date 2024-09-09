@@ -1,13 +1,29 @@
 import { Component } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton, IonIcon} from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton, IonIcon],
 })
 export class HomePage {
-  constructor() {}
+  username: string = 'guest';
+  name!: string;
+  lastname!: string;
+  edLevel!: string;
+  birthday!: string;
+  edLevels: Map<string, string> = new Map<string, string>
+
+  constructor(
+    private router: Router,
+  ) {
+    const state = this.router.getCurrentNavigation()?.extras.state;
+    if(state){
+      console.log(`Username: ${state['user']}`)
+      this.username = state['user']
+    }
+  }
 }
