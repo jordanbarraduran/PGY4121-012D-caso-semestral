@@ -73,6 +73,10 @@ export class LoginPage implements OnInit {
     }
   }
 
+  navigateToPasswordReset() {
+    this.router.navigate(['/password-reset']);
+  }
+
   ngOnInit() {}
 
   createExtrasUser(username: string): NavigationExtras | undefined {
