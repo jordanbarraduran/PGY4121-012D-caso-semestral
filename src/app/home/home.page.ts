@@ -13,8 +13,22 @@ import {
   IonTabs,
   IonTabBar,
   IonTabButton,
+  IonCardContent,
+  IonButton,
+  IonIcon,
+  IonLabel,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+
+import { addIcons } from 'ionicons';
+import { 
+  qrCodeOutline, 
+  timeOutline, 
+  bookOutline, 
+  homeOutline,
+  logOutOutline
+} from 'ionicons/icons';
+import { timeout } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -35,6 +49,10 @@ import { Router } from '@angular/router';
     IonTabs,
     IonTabBar,
     IonTabButton,
+    IonCardContent,
+    IonButton,
+    IonIcon,
+    IonLabel,
   ],
 })
 export class HomePage {
@@ -46,6 +64,14 @@ export class HomePage {
       console.log(`Username: ${state['user']}`);
       this.username = state['user'];
     }
+
+    addIcons({
+      'qr-code-outline': qrCodeOutline,
+      'time-outline': timeOutline,
+      'book-outline': bookOutline,
+      'home-outline': homeOutline,
+      'log-out-outline': logOutOutline
+    });
   }
 
   navigateToLogin() {

@@ -63,13 +63,13 @@ export class LoginPage implements OnInit {
   validateLogin() {
     console.log('Ejecutando validacion!');
     if (this.username === 'admin' && this.password === '12345') {
-      this.showToastMessage('Inicio de sesion valido', 'success');
+      this.showToastMessage('Inicio de sesion válido.', 'success');
       this.welcomeMessage = `Bienvenido ${this.username}`;
 
       const extras = this.createExtrasUser(this.username);
       this.router.navigate(['/home'], extras);
     } else {
-      this.showToastMessage('Inicio de sesion invalido', 'danger');
+      this.showToastMessage('Inicio de sesion inválido.', 'danger');
     }
   }
 
