@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import {
   IonContent,
   IonHeader,
@@ -14,6 +15,7 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonButton,
+  IonToast,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -29,6 +31,7 @@ import {
     IonList,
     IonItem,
     IonInput,
+    IonToast,
     CommonModule,
     FormsModule,
     IonCard,
@@ -39,9 +42,45 @@ import {
   ],
 })
 export class PasswordResetPage implements OnInit {
-  usuario!: string;
+  user!: string;
 
-  constructor() {}
+  constructor(
+    private toastController: ToastController,
+    private router: Router
+  ) {}
+
+  async showToast(
+    position: 'top' | 'middle' | 'bottom',
+    msg: string,
+    color: string
+  ) {
+    // Crea un toast con los siguientes parámetros
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 1500,
+      position: position,
+      color: color,
+    });
+
+    await toast.present();
+  }
+
+  resetPassword() {
+    if (this.user === 'admin') {
+      this.showToast(
+        'bottom',
+        'Contraseña reestablecida correctamente.',
+        'success'
+      );
+      this.router.navigate(['/login']);
+    } else {
+      this.showToast(
+        'bottom',
+        'El usuario ingresado no fue encontrado.',
+        'danger'
+      );
+    }
+  }
 
   ngOnInit() {}
 }
