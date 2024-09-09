@@ -65,6 +65,12 @@ export class HomePage {
     private toastController: ToastController,
   ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
+    
+    if (this.username === 'guest') {
+      console.log('No se ha iniciado sesión.');
+      this.navigateToLogin();
+    }
+
     if (state) {
       console.log(`Username: ${state['user']}`);
       this.username = state['user'];
@@ -84,6 +90,7 @@ export class HomePage {
   }
 
   async unavailableFunctionToast() {
+    console.log('Método unavailableFunctionToast.');
     const toast = await this.toastController.create({
       message: 'Funcionalidad no disponible.',
       color: 'danger',
