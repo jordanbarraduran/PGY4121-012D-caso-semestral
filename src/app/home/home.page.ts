@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+
 import {
   IonCard,
   IonCardHeader,
@@ -18,15 +21,14 @@ import {
   IonIcon,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { Router } from '@angular/router';
 
 import { addIcons } from 'ionicons';
-import { 
-  qrCodeOutline, 
-  timeOutline, 
-  bookOutline, 
+import {
+  qrCodeOutline,
+  timeOutline,
+  bookOutline,
   homeOutline,
-  logOutOutline
+  logOutOutline,
 } from 'ionicons/icons';
 import { timeout } from 'rxjs';
 
@@ -58,7 +60,10 @@ import { timeout } from 'rxjs';
 export class HomePage {
   username: string = 'guest';
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private toastController: ToastController,
+  ) {
     const state = this.router.getCurrentNavigation()?.extras.state;
     if (state) {
       console.log(`Username: ${state['user']}`);
@@ -70,11 +75,21 @@ export class HomePage {
       'time-outline': timeOutline,
       'book-outline': bookOutline,
       'home-outline': homeOutline,
-      'log-out-outline': logOutOutline
+      'log-out-outline': logOutOutline,
     });
   }
 
   navigateToLogin() {
     this.router.navigate(['/login']);
+  }
+
+  async unavailableFunctionToast() {
+    const toast = await this.toastController.create({
+      message: 'Funcionalidad no disponible.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 3000,
+    });
+    toast.present();
   }
 }

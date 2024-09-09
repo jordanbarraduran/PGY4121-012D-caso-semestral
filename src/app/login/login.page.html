@@ -1,9 +1,12 @@
-
 <ion-content class="ion-padding">
   <ion-card class="ion-text-center">
     <ion-card-header>
-      <div style="display: flex; justify-content: center; margin-bottom: 20px;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Logo_DuocUC.svg" alt="DuocUC Logo" style="max-width: 240px;">
+      <div style="display: flex; justify-content: center; margin-bottom: 20px">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Logo_DuocUC.svg"
+          alt="DuocUC Logo"
+          style="max-width: 240px"
+        />
       </div>
       <ion-card-title>
         {{ welcomeMessage }} <span class="gradient-app-name">RegistrAPP!</span>
@@ -48,14 +51,17 @@
           labelPlacement="stacked"
           placeholder="Contraseña"
         >
-          <ion-input-password-toggle slot="end" color="secondary"></ion-input-password-toggle>
+          <ion-input-password-toggle
+            slot="end"
+            color="secondary"
+          ></ion-input-password-toggle>
         </ion-input>
       </ion-item>
 
       <ion-card-content class="ion-text-end">
-        <ion-button 
-          class="reset-password-button" 
-          size="small" 
+        <ion-button
+          class="reset-password-button"
+          size="small"
           fill="clear"
           (click)="navigateToPasswordReset()"
           >¿Olvidaste tu contraseña?</ion-button

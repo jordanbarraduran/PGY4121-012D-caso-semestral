@@ -47,18 +47,15 @@ import { NavigationExtras, Router } from '@angular/router';
   ],
 })
 export class LoginPage implements OnInit {
-  welcomeMessage: string;
-  subMessage: string;
+  welcomeMessage = '¡Bienvenid@ a ';
+  subMessage = 'Nos alegra verte otra vez 😊';
   username!: string;
   password!: string;
 
   constructor(
     private router: Router,
     private toastController: ToastController,
-  ) {
-    this.welcomeMessage = '¡Bienvenid@ a ';
-    this.subMessage = 'Nos alegra verte otra vez 😊';
-  }
+  ) {}
 
   validateLogin() {
     console.log('Ejecutando validacion!');
