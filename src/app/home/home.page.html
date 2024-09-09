@@ -21,16 +21,13 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
-      <ion-icon name="play-circle"></ion-icon>
       Inicio
     </ion-tab-button>
     <ion-tab-button tab="library">
-      <ion-icon name="library"></ion-icon>
       Escanear
     </ion-tab-button>
-    <ion-tab-button tab="search">
-      <ion-icon name="search"></ion-icon>
-      Acerca de
+    <ion-tab-button tab="search" (click)="navigateToLogin()">
+      Cerrar sesión
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>

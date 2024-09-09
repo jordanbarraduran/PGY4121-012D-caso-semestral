@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton, IonIcon} from '@ionic/angular/standalone';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,15 +7,10 @@ import { Router } from '@angular/router';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton, IonIcon],
+  imports: [IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonList, IonItem, IonHeader, IonToolbar, IonTitle, IonContent, IonTabs, IonTabBar, IonTabButton],
 })
 export class HomePage {
   username: string = 'guest';
-  name!: string;
-  lastname!: string;
-  edLevel!: string;
-  birthday!: string;
-  edLevels: Map<string, string> = new Map<string, string>
 
   constructor(
     private router: Router,
@@ -25,5 +20,9 @@ export class HomePage {
       console.log(`Username: ${state['user']}`)
       this.username = state['user']
     }
+  }
+
+  navigateToLogin(){
+    this.router.navigate(['/login']);
   }
 }

@@ -44,10 +44,10 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  createExtrasUser(u: string): NavigationExtras | undefined {
+  createExtrasUser(username: string): NavigationExtras | undefined {
     return {
       state: {
-        user: u
+        user: username
       }
     }
   }
