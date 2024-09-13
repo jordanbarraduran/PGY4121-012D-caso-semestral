@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { User, UserList } from '../User';
 import {
   IonContent,
   IonHeader,
@@ -43,11 +44,16 @@ import {
 })
 export class PasswordResetPage implements OnInit {
   user!: string;
+  // userList!: UserList;
 
   constructor(
     private toastController: ToastController,
     private router: Router
   ) {}
+
+  // testing() {
+  //   console.log(this.userList);
+  // }
 
   async showToast(
     position: 'top' | 'middle' | 'bottom',
