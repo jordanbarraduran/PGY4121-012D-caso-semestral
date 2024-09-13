@@ -20,6 +20,8 @@ import {
 } from '@ionic/angular/standalone';
 import { ToastController } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
+// Import | Clase Usuario //
+import { User, UserList } from '../User';
 
 @Component({
   selector: 'app-login',
@@ -54,23 +56,36 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private toastController: ToastController,
+    private toastController: ToastController
   ) {}
 
+  // Instanciar Usuarios //
+  user1 = new User('admin', '12345');
+  user2 = new User('jordan', '123j');
+  user3 = new User('atenas', '123a');
+
+  // Agregar Usuarios a la Lista de Usuarios //
+  listOfUsers = new UserList().addUser(this.user1, this.user2, this.user3);
+
+  // Valida el inicio de sesión
   validateLogin() {
     console.log('Ejecutando validacion!');
-    if (this.username === 'admin' && this.password === '12345') {
+    // Revisa si la contraseña ingresada es correcta
+    if (this.listOfUsers.validatePassword(this.username, this.password)) {
+      // Si es correcta, el usuario ingresa correctamente al home
       this.showToastMessage('Inicio de sesion válido.', 'success');
       this.welcomeMessage = `Bienvenido ${this.username}`;
 
       const extras = this.createExtrasUser(this.username);
       this.router.navigate(['/home'], extras);
     } else {
+      // Si es incorrecta, se muestra un mensaje de error
       this.showToastMessage('Inicio de sesion inválido.', 'danger');
     }
   }
 
   navigateToPasswordReset() {
+    // const extras = this.createExtrasUserList(this.listOfUsers);
     this.router.navigate(['/password-reset']);
   }
 
@@ -83,6 +98,14 @@ export class LoginPage implements OnInit {
       },
     };
   }
+
+  // createExtrasUserList(userList: UserList): NavigationExtras | undefined {
+  //   return {
+  //     state: {
+  //       userList: userList,
+  //     },
+  //   };
+  // }
 
   async showToastMessage(text: string, msgColor: string) {
     const toast = await this.toastController.create({
