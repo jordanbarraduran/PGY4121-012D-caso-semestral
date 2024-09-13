@@ -21,7 +21,7 @@ export class UserList {
   // Lista de usuarios //
   userList: User[] = [];
 
-  // Agregar Usuario //
+  // Agregar Usuarios //
   addUser(...users: User[]): UserList {
     users.forEach((user) => {
       this.userList.push(user);

@@ -67,10 +67,6 @@ export class LoginPage implements OnInit {
   // Agregar Usuarios a la Lista de Usuarios //
   listOfUsers = new UserList().addUser(this.user1, this.user2, this.user3);
 
-  testing() {
-    console.log(this.listOfUsers.getUserList());
-  }
-
   // Valida el inicio de sesión
   validateLogin() {
     console.log('Ejecutando validacion!');
@@ -89,6 +85,7 @@ export class LoginPage implements OnInit {
   }
 
   navigateToPasswordReset() {
+    // const extras = this.createExtrasUserList(this.listOfUsers);
     this.router.navigate(['/password-reset']);
   }
 
@@ -101,6 +98,14 @@ export class LoginPage implements OnInit {
       },
     };
   }
+
+  // createExtrasUserList(userList: UserList): NavigationExtras | undefined {
+  //   return {
+  //     state: {
+  //       userList: userList,
+  //     },
+  //   };
+  // }
 
   async showToastMessage(text: string, msgColor: string) {
     const toast = await this.toastController.create({
