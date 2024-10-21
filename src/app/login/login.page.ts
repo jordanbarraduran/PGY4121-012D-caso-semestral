@@ -22,6 +22,7 @@ import { ToastController } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
 // Import | Clase Usuario //
 import { User, UserList } from '../User';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,9 @@ export class LoginPage implements OnInit {
 
   constructor(
     private router: Router,
-    private toastController: ToastController
+    private toastController: ToastController,
+    // Indica que este componente depende del service StorageService inicializado en storage.service.ts
+    private service: StorageService
   ) {}
 
   // Instanciar Usuarios //
