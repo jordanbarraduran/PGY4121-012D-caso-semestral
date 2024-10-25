@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Storage } from '@ionic/storage-angular';
 import {
   IonContent,
   IonHeader,
@@ -28,6 +29,7 @@ import { StorageService } from '../storage.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  providers: [StorageService, Storage],
   standalone: true,
   imports: [
     IonContent,

@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage-angular';
 // Permite que Angular inyecte el service en el componente indicado (root) para que pueda ser usado en dicho componente
 @Injectable({
   // Al indicar 'root' como el provider, Angular crea una sola instancia compartida del service que está disponible en toda la app
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
   // Crea una variable de tipo Storage para almacenar datos
@@ -26,8 +26,8 @@ export class StorageService {
     this._storage = storage;
   }
 
-  // Método para que los usuarios almacenen valores en el storage
+  // Método para almacenar valores en el storage
   public set(key: string, value: string) {
-    
+    this._storage?.set(key, value);
   }
 }
