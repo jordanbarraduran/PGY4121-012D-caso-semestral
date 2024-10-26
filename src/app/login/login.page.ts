@@ -22,14 +22,16 @@ import {
 import { ToastController } from '@ionic/angular';
 import { NavigationExtras, Router } from '@angular/router';
 // Import | Clase Usuario //
-import { User, UserList } from '../User';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../services/storage.service';
+import { AuthService } from '../services/auth.service';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  providers: [StorageService, Storage],
+  providers: [StorageService, Storage, AuthService],
   standalone: true,
   imports: [
     IonContent,
@@ -49,6 +51,7 @@ import { StorageService } from '../storage.service';
     IonButton,
     IonInput,
     IonInputPasswordToggle,
+    HttpClientModule,
   ],
 })
 export class LoginPage implements OnInit {
@@ -61,29 +64,29 @@ export class LoginPage implements OnInit {
     private router: Router,
     private toastController: ToastController,
     // Indica que este componente depende del service StorageService inicializado en storage.service.ts
-    private service: StorageService
+    private storageService: StorageService,
+    private authService: AuthService,
   ) {}
 
-  // Instanciar Usuarios //
-  user1 = new User('admin', '12345');
-  user2 = new User('jordan', '123j');
-  user3 = new User('atenas', '123a');
-
-  // Agregar Usuarios a la Lista de Usuarios //
-  listOfUsers = new UserList().addUser(this.user1, this.user2, this.user3);
-
   // Valida el inicio de sesión
-  validateLogin() {
+  async validateLogin() {
     console.log('Ejecutando validacion!');
-    // Revisa si la contraseña ingresada es correcta
-    if (this.listOfUsers.validatePassword(this.username, this.password)) {
-      // Si es correcta, el usuario ingresa correctamente al home
-      this.showToastMessage('Inicio de sesion válido.', 'success');
-      this.welcomeMessage = `Bienvenido ${this.username}`;
+    // Revisa si el usuario y contraseña son correctos
+    if (await this.authService.checkUsernameExists(this.username)) {
+      console.log('Usuario existe!');
 
-      const extras = this.createExtrasUser(this.username);
-      this.router.navigate(['/home'], extras);
-    } else {
+      // login
+      const user = await this.authService.login(this.username, this.password);
+
+      if (this.authService.isAuthenticated()) {
+        this.showToastMessage('Inicio de sesion válido.', 'success');
+        this.welcomeMessage = `Bienvenido ${user}`;
+        const extras = this.createExtrasUser(this.username);
+        this.router.navigate(['/home'], extras);
+      } else {
+        this.showToastMessage('Inicio de sesion inválido.', 'danger');
+      }
+  } else {
       // Si es incorrecta, se muestra un mensaje de error
       this.showToastMessage('Inicio de sesion inválido.', 'danger');
     }
@@ -103,14 +106,6 @@ export class LoginPage implements OnInit {
       },
     };
   }
-
-  // createExtrasUserList(userList: UserList): NavigationExtras | undefined {
-  //   return {
-  //     state: {
-  //       userList: userList,
-  //     },
-  //   };
-  // }
 
   async showToastMessage(text: string, msgColor: string) {
     const toast = await this.toastController.create({

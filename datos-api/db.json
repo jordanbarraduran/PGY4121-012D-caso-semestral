@@ -1,0 +1,25 @@
+{
+    "users": [
+      {
+        "id": 1,
+        "nombre": "Atenas",
+        "apellido": "Pérez",
+        "username": "aperez",
+        "email": "atenas.perez@ejemplo.com",
+        "telefono": "912345678",
+        "carrera": "analista",
+        "password": "123456"
+      },
+      {
+        "id": 2,
+        "nombre": "Jordan",
+        "apellido": "Barra",
+        "username": "jbarra",
+        "email": "jordan.barra@ejemplo.com",
+        "telefono": "987654321",
+        "carrera": "analista",
+        "password": "123456"
+      }
+    ]
+  }
+  

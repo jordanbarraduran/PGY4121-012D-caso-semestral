@@ -27,7 +27,17 @@ export class StorageService {
   }
 
   // Método para almacenar valores en el storage
-  public set(key: string, value: string) {
+  async set(key: string, value: string) {
     this._storage?.set(key, value);
+  }
+
+  // Método para obtener valores del storage
+  async get(key: string) {
+    return await this._storage?.get(key);
+  }
+
+  // Método para eliminar valores del storage
+  async remove(key: string) {
+    await this._storage?.remove(key);
   }
 }

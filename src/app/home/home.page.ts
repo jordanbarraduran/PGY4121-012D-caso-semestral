@@ -81,6 +81,11 @@ export class HomePage {
   }
 
   navigateToLogin() {
+    // Desconectando, eliminando currentUser de localStorage
+    console.log('Desconectando, eliminando currentUser de localStorage');
+    console.log(localStorage.getItem('currentUser'));
+    localStorage.removeItem('currentUser');
+    
     this.router.navigate(['/login']);
   }
 
