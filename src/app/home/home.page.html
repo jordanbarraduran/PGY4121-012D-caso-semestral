@@ -8,7 +8,7 @@
           style="max-width: 200px"
         />
       </div>
-      <ion-card-title> Bienvenid&#64;, {{ username }} </ion-card-title>
+      <ion-card-title> Bienvenid&#64;, {{ currentUser }} </ion-card-title>
       <ion-card-subtitle>¿Qué deseas hacer hoy?</ion-card-subtitle>
     </ion-card-header>
 
@@ -66,7 +66,7 @@
       <ion-icon name="qr-code-outline"></ion-icon>
       <ion-label>Escanear</ion-label>
     </ion-tab-button>
-    <ion-tab-button (click)="navigateToLogin()">
+    <ion-tab-button (click)="logout()">
       <ion-icon name="log-out-outline"></ion-icon>
       <ion-label>Cerrar sesión</ion-label>
     </ion-tab-button>

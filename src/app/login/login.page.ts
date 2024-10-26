@@ -70,25 +70,32 @@ export class LoginPage implements OnInit {
 
   // Valida el inicio de sesión
   async validateLogin() {
-    console.log('Ejecutando validacion!');
-    // Revisa si el usuario y contraseña son correctos
-    if (await this.authService.checkUsernameExists(this.username)) {
-      console.log('Usuario existe!');
-
-      // login
-      const user = await this.authService.login(this.username, this.password);
-
-      if (this.authService.isAuthenticated()) {
-        this.showToastMessage('Inicio de sesion válido.', 'success');
-        this.welcomeMessage = `Bienvenido ${user}`;
-        const extras = this.createExtrasUser(this.username);
-        this.router.navigate(['/home'], extras);
-      } else {
-        this.showToastMessage('Inicio de sesion inválido.', 'danger');
+    try {
+      if (!this.username || !this.password) {
+        this.showToastMessage('Por favor ingrese todos los campos', 'warning');
+        return;
       }
-  } else {
-      // Si es incorrecta, se muestra un mensaje de error
-      this.showToastMessage('Inicio de sesion inválido.', 'danger');
+
+      console.log('Validando inicio de sesión...');
+
+      if (await this.authService.checkUsernameExists(this.username)) {
+        const loginSuccess = await this.authService.login(this.username, this.password);
+        
+        console.log('loginSuccess:', loginSuccess);
+
+        if (loginSuccess) {
+          console.log('Inicio de sesión válido');
+          this.showToastMessage('Inicio de sesión válido', 'success');
+          this.router.navigate(['/home']);
+        } else {
+          this.showToastMessage('Contraseña incorrecta', 'danger');
+        }
+      } else {
+        this.showToastMessage('Usuario o contraseña inválidos', 'danger');
+      }
+    } catch (error) {
+      console.error('Error en login:', error);
+      this.showToastMessage('Error al iniciar sesión', 'danger');
     }
   }
 

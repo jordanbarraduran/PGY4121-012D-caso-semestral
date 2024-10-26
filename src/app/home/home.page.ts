@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -30,7 +30,8 @@ import {
   homeOutline,
   logOutOutline,
 } from 'ionicons/icons';
-import { timeout } from 'rxjs';
+import { User } from '../models/user';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -58,17 +59,18 @@ import { timeout } from 'rxjs';
   ],
 })
 export class HomePage {
-  username: string = 'guest';
+  currentUser: User | null = null;
 
   constructor(
     private router: Router,
     private toastController: ToastController,
+    private authService: AuthService
   ) {
-    const state = this.router.getCurrentNavigation()?.extras.state;
+    this.currentUser = this.authService.getCurrentUser();
     
-    if (state) {
-      console.log(`Username: ${state['user']}`);
-      this.username = state['user'];
+    if (!this.currentUser) {
+      this.authService.logout(); // This will redirect to login
+      return;
     }
 
     addIcons({
@@ -80,13 +82,26 @@ export class HomePage {
     });
   }
 
-  navigateToLogin() {
-    // Desconectando, eliminando currentUser de localStorage
-    console.log('Desconectando, eliminando currentUser de localStorage');
-    console.log(localStorage.getItem('currentUser'));
-    localStorage.removeItem('currentUser');
-    
-    this.router.navigate(['/login']);
+  async logout() {
+    try {
+      await this.authService.logout();
+      const toast = await this.toastController.create({
+        message: 'Sesión cerrada exitosamente',
+        color: 'success',
+        position: 'bottom',
+        duration: 3000,
+      });
+      toast.present();
+    } catch (error) {
+      console.error('Error during logout:', error);
+      const toast = await this.toastController.create({
+        message: 'Error al cerrar sesión',
+        color: 'danger',
+        position: 'bottom',
+        duration: 3000,
+      });
+      toast.present();
+    }
   }
 
   async unavailableFunctionToast() {
