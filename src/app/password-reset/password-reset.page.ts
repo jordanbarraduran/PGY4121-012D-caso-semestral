@@ -51,10 +51,6 @@ export class PasswordResetPage implements OnInit {
     private router: Router
   ) {}
 
-  // testing() {
-  //   console.log(this.userList);
-  // }
-
   async showToast(
     position: 'top' | 'middle' | 'bottom',
     msg: string,
@@ -74,6 +70,7 @@ export class PasswordResetPage implements OnInit {
   goToLogin() {
     this.router.navigate(['/login']);
   }
+  
   resetPassword() {
     if (this.user === 'admin') {
       this.showToast(

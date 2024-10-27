@@ -15,7 +15,7 @@ export class AuthService {
   private router = inject(Router);
   private profileService = inject(ProfileService);
   private apiUrl = 'http://localhost:3000/users';
-
+  
   constructor() { }
 
   async login(username: string, password: string) {

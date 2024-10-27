@@ -32,6 +32,7 @@ import {
 } from 'ionicons/icons';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
+import { ProfileService } from '../services/profile.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
@@ -62,8 +63,10 @@ import { Router } from '@angular/router';
 export class HomePage {
   private authService = inject(AuthService);
   private router = inject(Router);
-  currentUser: User | null = null;
-
+  private profileService = inject(ProfileService)
+  private currentUser = this.profileService.getCurrentUser();
+  username = this.currentUser?.nombre;
+  
   constructor(private toastController: ToastController) {
     addIcons({
       'qr-code-outline': qrCodeOutline,

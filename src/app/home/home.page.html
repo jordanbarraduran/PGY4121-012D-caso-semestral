@@ -8,7 +8,7 @@
           style="max-width: 200px"
         />
       </div>
-      <ion-card-title> Bienvenid&#64;, {{ currentUser }} </ion-card-title>
+      <ion-card-title> Bienvenid&#64;, {{ username }} </ion-card-title>
       <ion-card-subtitle>¿Qué deseas hacer hoy?</ion-card-subtitle>
     </ion-card-header>
 
@@ -24,9 +24,9 @@
 
     <ion-card-content>
       <ion-button
+      class="ion-margin-bottom"
         expand="block"
         shape="round"
-        class="ion-margin-bottom"
         (click)="unavailableFunctionToast()"
       >
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
@@ -54,7 +54,6 @@
       </ion-button>
     </ion-card-content>
   </ion-card>
-</ion-content>
 
 <ion-tabs>
   <ion-tab-bar slot="bottom">
@@ -62,7 +61,7 @@
       <ion-icon name="person-circle-outline"></ion-icon>
       <ion-label>Mi perfil</ion-label>
     </ion-tab-button>
-    <ion-tab-button tab="home">
+    <ion-tab-button>
       <ion-icon name="home-outline"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
@@ -76,3 +75,4 @@
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
+</ion-content>
