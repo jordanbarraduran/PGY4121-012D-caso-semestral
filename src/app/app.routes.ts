@@ -28,8 +28,9 @@ export const routes: Routes = [
     path: 'profile',
     canActivate: [NoAuthenticationGuard],
     loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
-  },  {
-    path: 'notfound',
+  },
+  {
+    path: '**',
     loadComponent: () => import('./notfound/notfound.page').then( m => m.NotfoundPage)
   },
 
