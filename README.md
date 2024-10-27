@@ -14,6 +14,7 @@ npx json-server db.json
 Para iniciar el servidor de desarrollo de Ionic, navega al directorio base del proyecto y ejecuta el siguiente comando:
 
 ```sh
+// En /datos-api
 cd ..
 ionic serve
 ```
