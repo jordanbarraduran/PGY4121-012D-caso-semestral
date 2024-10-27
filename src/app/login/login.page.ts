@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Storage } from '@ionic/storage-angular';
 import {
   IonContent,
   IonHeader,
@@ -20,18 +19,14 @@ import {
   IonInputPasswordToggle,
 } from '@ionic/angular/standalone';
 import { ToastController } from '@ionic/angular';
-import { NavigationExtras, Router } from '@angular/router';
+import { Router } from '@angular/router';
 // Import | Clase Usuario //
-import { StorageService } from '../services/storage.service';
 import { AuthService } from '../services/auth.service';
-import { provideHttpClient } from '@angular/common/http';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  providers: [StorageService, Storage, AuthService],
   standalone: true,
   imports: [
     IonContent,
@@ -51,67 +46,51 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     IonButton,
     IonInput,
     IonInputPasswordToggle,
-    HttpClientModule,
   ],
 })
 export class LoginPage implements OnInit {
+  // Inyecta el servicio AuthService en la variable authService
+  private authService = inject(AuthService);
+  private router = inject(Router);
+
+  username = '';
+  password = '';
+
   welcomeMessage = '¡Bienvenid@ a ';
   subMessage = 'Nos alegra verte otra vez 😊';
-  username!: string;
-  password!: string;
 
   constructor(
-    private router: Router,
     private toastController: ToastController,
     // Indica que este componente depende del service StorageService inicializado en storage.service.ts
-    private storageService: StorageService,
-    private authService: AuthService,
   ) {}
 
-  // Valida el inicio de sesión
-  async validateLogin() {
-    try {
-      if (!this.username || !this.password) {
-        this.showToastMessage('Por favor ingrese todos los campos', 'warning');
-        return;
-      }
+  async ngOnInit() {
+    // Revisa si hay un usuario logueado
+    const currentUser = await this.authService.getCurrentUser();
+    if (currentUser) {
+      console.log('Already logged in user:', currentUser);
+      // Redirige al usuario a la página de inicio si ya está logueado
+      await this.router.navigateByUrl('/home');
+    } else {
+      console.log('No user logged in');
+    }
+  }
 
-      console.log('Validando inicio de sesión...');
+  async login(username: string, password: string) {
+    if (await this.authService.login(username, password)) {
+      console.log('Login successful');
+      // Redirect to home page
+      this.showToastMessage('Inicio de sesión válido', 'success');
+      await this.router.navigateByUrl('/home');
 
-      if (await this.authService.checkUsernameExists(this.username)) {
-        const loginSuccess = await this.authService.login(this.username, this.password);
-        
-        console.log('loginSuccess:', loginSuccess);
-
-        if (loginSuccess) {
-          console.log('Inicio de sesión válido');
-          this.showToastMessage('Inicio de sesión válido', 'success');
-          this.router.navigate(['/home']);
-        } else {
-          this.showToastMessage('Contraseña incorrecta', 'danger');
-        }
-      } else {
-        this.showToastMessage('Usuario o contraseña inválidos', 'danger');
-      }
-    } catch (error) {
-      console.error('Error en login:', error);
-      this.showToastMessage('Error al iniciar sesión', 'danger');
+    } else {
+      this.showToastMessage('Por favor ingrese todos los campos', 'warning');
+      this.showToastMessage('Contraseña incorrecta', 'danger');
     }
   }
 
   navigateToPasswordReset() {
-    // const extras = this.createExtrasUserList(this.listOfUsers);
     this.router.navigate(['/password-reset']);
-  }
-
-  ngOnInit() {}
-
-  createExtrasUser(username: string): NavigationExtras | undefined {
-    return {
-      state: {
-        user: username,
-      },
-    };
   }
 
   async showToastMessage(text: string, msgColor: string) {

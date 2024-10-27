@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
 
 import {
   IonCard,
@@ -32,7 +31,6 @@ import {
 } from 'ionicons/icons';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -59,19 +57,13 @@ import { AuthService } from '../services/auth.service';
   ],
 })
 export class HomePage {
+  private authService = inject(AuthService);
   currentUser: User | null = null;
 
+
   constructor(
-    private router: Router,
     private toastController: ToastController,
-    private authService: AuthService
   ) {
-    this.currentUser = this.authService.getCurrentUser();
-    
-    if (!this.currentUser) {
-      this.authService.logout(); // This will redirect to login
-      return;
-    }
 
     addIcons({
       'qr-code-outline': qrCodeOutline,
@@ -83,25 +75,8 @@ export class HomePage {
   }
 
   async logout() {
-    try {
-      await this.authService.logout();
-      const toast = await this.toastController.create({
-        message: 'Sesión cerrada exitosamente',
-        color: 'success',
-        position: 'bottom',
-        duration: 3000,
-      });
-      toast.present();
-    } catch (error) {
-      console.error('Error during logout:', error);
-      const toast = await this.toastController.create({
-        message: 'Error al cerrar sesión',
-        color: 'danger',
-        position: 'bottom',
-        duration: 3000,
-      });
-      toast.present();
-    }
+    console.log('Método logout.');
+    await this.authService.logout();
   }
 
   async unavailableFunctionToast() {
@@ -114,4 +89,5 @@ export class HomePage {
     });
     toast.present();
   }
+
 }

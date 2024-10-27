@@ -1,25 +1,28 @@
 {
-    "users": [
-      {
-        "id": 1,
-        "nombre": "Atenas",
-        "apellido": "Pérez",
-        "username": "aperez",
-        "email": "atenas.perez@ejemplo.com",
-        "telefono": "912345678",
-        "carrera": "analista",
-        "password": "123456"
-      },
-      {
-        "id": 2,
-        "nombre": "Jordan",
-        "apellido": "Barra",
-        "username": "jbarra",
-        "email": "jordan.barra@ejemplo.com",
-        "telefono": "987654321",
-        "carrera": "analista",
-        "password": "123456"
-      }
-    ]
-  }
-  
+  "users": [
+    {
+      "id": "1",
+      "username": "aperez",
+      "nombre": "Atenas",
+      "apellido": "Pérez",
+      "carrera": "analista",
+      "email": "atenas.perez@ejemplo.com",
+      "password": "123456",
+      "role": "estudiante",
+      "createdAt": "2024-01-15T08:30:00.000Z",
+      "updatedAt": "2024-01-15T08:30:00.000Z"
+    },
+    {
+      "id": "2",
+      "username": "jbarra",
+      "nombre": "Jordan",
+      "apellido": "Barra",
+      "carrera": "analista",
+      "email": "jordan.barra@ejemplo.com",
+      "password": "123456",
+      "role": "estudiante",
+      "createdAt": "2024-02-01T10:15:00.000Z",
+      "updatedAt": "2024-02-10T14:20:00.000Z"
+    }
+  ]
+}
