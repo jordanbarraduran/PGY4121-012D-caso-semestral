@@ -13,6 +13,7 @@ export class StorageService {
   }
 
   async init() {
+    console.log('Initializing storage service');
     const storage = await this.storage.create();
     this._storage = storage;
   }

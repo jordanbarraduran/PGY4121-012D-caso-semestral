@@ -2,11 +2,12 @@ import { Routes } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
-
+import { NoAuthenticationGuard } from './guards/auth.guard';
+import { AuthenticationGuard } from './guards/no-auth.guard';
 export const routes: Routes = [
   {
     path: 'home',
-    // guard
+    canActivate: [NoAuthenticationGuard],
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
   {
@@ -16,6 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'login',
+    canActivate: [AuthenticationGuard],
     loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
   },
   {
