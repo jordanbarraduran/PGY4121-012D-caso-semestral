@@ -28,6 +28,7 @@ import {
   bookOutline,
   homeOutline,
   logOutOutline,
+  personCircleOutline
 } from 'ionicons/icons';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
@@ -71,6 +72,7 @@ export class HomePage {
       'book-outline': bookOutline,
       'home-outline': homeOutline,
       'log-out-outline': logOutOutline,
+      'person-circle-outline': personCircleOutline
     });
   }
 
