@@ -71,6 +71,9 @@ export class PasswordResetPage implements OnInit {
     await toast.present();
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
   resetPassword() {
     if (this.user === 'admin') {
       this.showToast(

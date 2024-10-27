@@ -24,5 +24,14 @@ export const routes: Routes = [
     path: 'password-reset',
     loadComponent: () => import('./password-reset/password-reset.page').then( m => m.PasswordResetPage)
   },
+  {
+    path: 'profile',
+    canActivate: [NoAuthenticationGuard],
+    loadComponent: () => import('./profile/profile.page').then( m => m.ProfilePage)
+  },  {
+    path: 'notfound',
+    loadComponent: () => import('./notfound/notfound.page').then( m => m.NotfoundPage)
+  },
+
 
 ];

@@ -81,7 +81,7 @@ export class LoginPage implements OnInit {
       console.log('Login successful');
       // Redirect to home page
       this.showToastMessage('Inicio de sesión válido', 'success');
-      await this.router.navigateByUrl('/home');
+      this.router.navigate(['/home']);
 
     } else {
       this.showToastMessage('Por favor ingrese todos los campos', 'warning');

@@ -28,10 +28,11 @@ import {
   bookOutline,
   homeOutline,
   logOutOutline,
-  personCircleOutline
+  personCircleOutline,
 } from 'ionicons/icons';
 import { User } from '../models/user';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -57,28 +58,31 @@ import { AuthService } from '../services/auth.service';
     IonLabel,
   ],
 })
+
 export class HomePage {
   private authService = inject(AuthService);
+  private router = inject(Router);
   currentUser: User | null = null;
 
-
-  constructor(
-    private toastController: ToastController,
-  ) {
-
+  constructor(private toastController: ToastController) {
     addIcons({
       'qr-code-outline': qrCodeOutline,
       'time-outline': timeOutline,
       'book-outline': bookOutline,
       'home-outline': homeOutline,
       'log-out-outline': logOutOutline,
-      'person-circle-outline': personCircleOutline
+      'person-circle-outline': personCircleOutline,
     });
   }
 
   async logout() {
     console.log('Método logout.');
     await this.authService.logout();
+  }
+
+  async goToProfile() {
+    console.log('Método goToProfile.');
+    await this.router.navigateByUrl('/profile');
   }
 
   async unavailableFunctionToast() {
@@ -91,5 +95,4 @@ export class HomePage {
     });
     toast.present();
   }
-
 }

@@ -1,0 +1,25 @@
+.divider {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #535353;
+  margin: 1em;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+
+  ion-label {
+    h2 {
+      font-size: 0.9em;
+      font-weight: 500;
+      color: var(--ion-color-medium);
+    }
+
+    p {
+      font-size: 1.1em;
+      margin-top: 4px;
+    }
+  }
+}
