@@ -24,7 +24,7 @@
 
     <ion-card-content>
       <ion-button
-      class="ion-margin-bottom"
+        class="ion-margin-bottom"
         expand="block"
         shape="round"
         (click)="unavailableFunctionToast()"
@@ -55,24 +55,25 @@
     </ion-card-content>
   </ion-card>
 
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button (click)="goToProfile()">
-      <ion-icon name="person-circle-outline"></ion-icon>
-      <ion-label>Mi perfil</ion-label>
-    </ion-tab-button>
-    <ion-tab-button>
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Inicio</ion-label>
-    </ion-tab-button>
-    <ion-tab-button tab="scan" (click)="unavailableFunctionToast()">
-      <ion-icon name="qr-code-outline"></ion-icon>
-      <ion-label>Escanear</ion-label>
-    </ion-tab-button>
-    <ion-tab-button (click)="logout()">
-      <ion-icon name="log-out-outline"></ion-icon>
-      <ion-label>Cerrar sesión</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+  <!-- TABS -->
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button (click)="goToProfile()">
+        <ion-icon name="person-circle-outline"></ion-icon>
+        <ion-label>Mi perfil</ion-label>
+      </ion-tab-button>
+      <ion-tab-button>
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Inicio</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="scan" (click)="unavailableFunctionToast()">
+        <ion-icon name="qr-code-outline"></ion-icon>
+        <ion-label>Escanear</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon>
+        <ion-label>Cerrar sesión</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 </ion-content>

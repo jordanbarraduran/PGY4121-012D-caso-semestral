@@ -59,14 +59,13 @@ import { Router } from '@angular/router';
     IonLabel,
   ],
 })
-
 export class HomePage {
   private authService = inject(AuthService);
   private router = inject(Router);
-  private profileService = inject(ProfileService)
+  private profileService = inject(ProfileService);
   private currentUser = this.profileService.getCurrentUser();
   username = this.currentUser?.nombre;
-  
+
   constructor(private toastController: ToastController) {
     addIcons({
       'qr-code-outline': qrCodeOutline,
