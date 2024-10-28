@@ -1,0 +1,38 @@
+<ion-content class="ion-padding">
+  <ion-card class="ion-text-center">
+    <ion-card-header>
+      <div style="display: flex; justify-content: center; margin-bottom: 20px">
+        <img
+          src="https://upload.wikimedia.org/wikipedia/commons/a/aa/Logo_DuocUC.svg"
+          alt="404 Image"
+          style="max-width: 150px"
+        />
+      </div>
+      <ion-card-title>Oops! Página no encontrada</ion-card-title>
+      <ion-card-subtitle>Error 404</ion-card-subtitle>
+    </ion-card-header>
+
+    <div
+      style="
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 1px solid #535353;
+        margin: 1em;
+      "
+    ></div>
+
+    <ion-card-content>
+      <p>Parece que la página que buscas no existe o fue movida.</p>
+      <ion-button
+        expand="block"
+        shape="round"
+        class="ion-margin-bottom"
+        (click)="goToLogin()"
+      >
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        Volver al inicio
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

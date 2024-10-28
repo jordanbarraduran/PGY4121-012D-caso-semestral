@@ -25,3 +25,11 @@
 #container a {
   text-decoration: none;
 }
+
+ion-card {
+  position: relative;
+  z-index: 10;
+}
+ion-tabs {
+  z-index: 1;
+}

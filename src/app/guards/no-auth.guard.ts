@@ -5,7 +5,7 @@ import { AuthService } from "../services/auth.service";
 @Injectable({
     providedIn: 'root'
 })
-export class NoAuthenticationGuard implements CanActivate {
+export class AuthenticationGuard implements CanActivate {
     constructor(
         private readonly router: Router,
         private readonly authService: AuthService
@@ -14,10 +14,10 @@ export class NoAuthenticationGuard implements CanActivate {
         console.log('Executing guard!')
         const auth = await this.authService.isAuthenticated();
         console.log('User is authenticated:', auth);
-        if (!auth) {
-            console.log('User is not authenticated, redirecting to Login!')
-            await this.router.navigate(['/login']);
+        if (auth) {
+            console.log('User is authenticated, redirecting to Home!')
+            await this.router.navigate(['/home']);
         }
-        return auth;
+        return !auth;
     }
 }

@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
 
 import {
   IonCard,
@@ -29,9 +28,12 @@ import {
   bookOutline,
   homeOutline,
   logOutOutline,
+  personCircleOutline,
 } from 'ionicons/icons';
-import { timeout } from 'rxjs';
-
+import { User } from '../models/user';
+import { AuthService } from '../services/auth.service';
+import { ProfileService } from '../services/profile.service';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -58,30 +60,31 @@ import { timeout } from 'rxjs';
   ],
 })
 export class HomePage {
-  username: string = 'guest';
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private profileService = inject(ProfileService);
+  private currentUser = this.profileService.getCurrentUser();
+  username = this.currentUser?.nombre;
 
-  constructor(
-    private router: Router,
-    private toastController: ToastController,
-  ) {
-    const state = this.router.getCurrentNavigation()?.extras.state;
-    
-    if (state) {
-      console.log(`Username: ${state['user']}`);
-      this.username = state['user'];
-    }
-
+  constructor(private toastController: ToastController) {
     addIcons({
       'qr-code-outline': qrCodeOutline,
       'time-outline': timeOutline,
       'book-outline': bookOutline,
       'home-outline': homeOutline,
       'log-out-outline': logOutOutline,
+      'person-circle-outline': personCircleOutline,
     });
   }
 
-  navigateToLogin() {
-    this.router.navigate(['/login']);
+  async logout() {
+    console.log('Método logout.');
+    await this.authService.logout();
+  }
+
+  async goToProfile() {
+    console.log('Método goToProfile.');
+    await this.router.navigateByUrl('/profile');
   }
 
   async unavailableFunctionToast() {

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { User, UserList } from '../User';
+
 import {
   IonContent,
   IonHeader,
@@ -51,10 +51,6 @@ export class PasswordResetPage implements OnInit {
     private router: Router
   ) {}
 
-  // testing() {
-  //   console.log(this.userList);
-  // }
-
   async showToast(
     position: 'top' | 'middle' | 'bottom',
     msg: string,
@@ -71,6 +67,10 @@ export class PasswordResetPage implements OnInit {
     await toast.present();
   }
 
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
+  
   resetPassword() {
     if (this.user === 'admin') {
       this.showToast(
