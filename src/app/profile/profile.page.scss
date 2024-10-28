@@ -23,3 +23,10 @@ ion-item {
     }
   }
 }
+ion-card {
+  position: relative;
+  z-index: 10;
+}
+ion-tabs {
+  z-index: 1;
+}

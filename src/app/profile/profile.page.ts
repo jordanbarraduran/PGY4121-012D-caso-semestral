@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
 import { IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -65,6 +66,7 @@ import { Router } from '@angular/router';
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private toastController = inject(ToastController);
   currentUser: User | null = null;
   userFullName: string = '';
 
@@ -109,7 +111,14 @@ export class ProfilePage implements OnInit {
     return new Date(date).toLocaleDateString('es-CL');
   }
 
-  unavailableFunctionToast() {
-    // Tu implementación actual
+  async unavailableFunctionToast() {
+    console.log('Método unavailableFunctionToast.');
+    const toast = await this.toastController.create({
+      message: 'Funcionalidad no disponible.',
+      color: 'danger',
+      position: 'bottom',
+      duration: 3000,
+    });
+    toast.present();
   }
 }
