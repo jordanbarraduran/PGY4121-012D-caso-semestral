@@ -38,6 +38,7 @@ export class ProfileService {
 
   clearCurrentUser() {
     this.currentUser = null;
+    // storage usar metodo remove
     this.storageService.setItem('currentUser', null);
   }
 }
