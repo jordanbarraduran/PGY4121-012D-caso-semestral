@@ -1,31 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { TabMenuComponent } from '../tab-menu/tab-menu.component';
 // Import | Scanner //
 import {
   BarcodeScanner,
   BarcodeFormat,
-  Barcode,
-  ScanResult,
 } from '@capacitor-mlkit/barcode-scanning';
-
 import {
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
-  IonList,
-  IonItem,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
   IonContent,
-  IonTabs,
-  IonTabBar,
-  IonTabButton,
   IonCardContent,
   IonButton,
   IonIcon,
-  IonLabel,
 } from '@ionic/angular/standalone';
 
 import { addIcons } from 'ionicons';
@@ -53,26 +42,16 @@ import { DataQR } from '../models/dataQR';
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
-    IonList,
-    IonItem,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
     IonContent,
-    IonTabs,
-    IonTabBar,
-    IonTabButton,
     IonCardContent,
     IonButton,
     IonIcon,
-    IonLabel,
+    TabMenuComponent,
   ],
 })
 export class HomePage {
-  private authService = inject(AuthService);
-  private router = inject(Router);
   private profileService = inject(ProfileService);
-  private attendanceService = inject(AttendanceService);
+
   private currentUser = this.profileService.getCurrentUser();
   private storage = inject(StorageService);
   username = this.currentUser?.nombre;
@@ -95,20 +74,6 @@ export class HomePage {
       'log-out-outline': logOutOutline,
       'person-circle-outline': personCircleOutline,
     });
-  }
-
-  async logout() {
-    console.log('Método logout.');
-    await this.authService.logout();
-  }
-
-  async navigateToAttendance() {
-    await this.router.navigateByUrl('/attendance');
-  }
-
-  async goToProfile() {
-    console.log('Método goToProfile.');
-    await this.router.navigateByUrl('/profile');
   }
 
   async unavailableFunctionToast() {

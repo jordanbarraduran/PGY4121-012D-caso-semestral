@@ -1,7 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent } from '@ionic/angular/standalone';
+import { TabMenuComponent } from '../tab-menu/tab-menu.component';
+import {
+  IonContent,
+  IonCardContent,
+  IonCardTitle,
+  IonCardSubtitle,
+  IonCardHeader,
+  IonCard,
+  IonLabel,
+  IonAccordion,
+  IonAccordionGroup,
+  IonItem,
+  IonIcon,
+} from '@ionic/angular/standalone';
 
 import { AttendanceService } from '../services/attendance.service';
 
@@ -10,7 +23,22 @@ import { AttendanceService } from '../services/attendance.service';
   templateUrl: './attendance.page.html',
   styleUrls: ['./attendance.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, NgFor, FormsModule],
+  imports: [
+    IonCard,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle,
+    IonCardContent,
+    IonContent,
+    CommonModule,
+    FormsModule,
+    IonLabel,
+    IonAccordion,
+    IonAccordionGroup,
+    IonItem,
+    IonIcon,
+    TabMenuComponent,
+  ],
 })
 export class AttendancePage implements OnInit {
   private attendanceService = inject(AttendanceService);

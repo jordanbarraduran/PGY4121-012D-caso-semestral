@@ -1,4 +1,30 @@
 <ion-content [fullscreen]="true">
-  <h1>ASISTENCIAS</h1>
-  <p>{{this.asistenciaData}}</p>
+  <ion-card class="ion-text-center">
+    <ion-card-header>
+      <ion-card-title class="ion-margin-top">Asistencias</ion-card-title>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+
+    <div class="divider"></div>
+
+    <ion-card-content>
+      <ion-accordion-group>
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>Programación de Aplicaciones Móviles</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ul>
+              <li>Asistencia 1</li>
+              <li>Asistencia 2</li>
+              <li>Asistencia 3</li>
+            </ul>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- TABS -->
+  <app-tab-menu></app-tab-menu>
 </ion-content>
