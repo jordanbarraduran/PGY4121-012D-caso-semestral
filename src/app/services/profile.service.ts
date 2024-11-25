@@ -3,7 +3,7 @@ import { User } from '../models/user';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
   private storageService = inject(StorageService);

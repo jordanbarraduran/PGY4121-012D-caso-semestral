@@ -14,20 +14,24 @@ export class AuthService {
   private storage = inject(StorageService);
   private router = inject(Router);
   private profileService = inject(ProfileService);
+  // RIGHT URL //
   private apiUrl =
     'https://api.jsonbin.io/v3/b/6728e650ad19ca34f8c40232?meta=false';
+  // -------- //
+
+  public response: { users: any[] } | null = null;
 
   constructor() {}
 
   async login(username: string, password: string) {
     try {
       // Get users that match both username and password
-      const response = await firstValueFrom(
+      this.response = await firstValueFrom(
         this.http.get<{ users: any[] }>(this.apiUrl)
       );
 
       // Get array of users
-      const allUsers = response.users;
+      const allUsers = this.response.users;
 
       // Checks if user exists and is valid
       const user = allUsers.find(

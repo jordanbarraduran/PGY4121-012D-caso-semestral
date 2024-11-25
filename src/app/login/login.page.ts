@@ -23,14 +23,6 @@ import { Router } from '@angular/router';
 // Import | Clase Usuario //
 import { AuthService } from '../services/auth.service';
 
-// Import | Scanner //
-import {
-  BarcodeScanner,
-  BarcodeFormat,
-  Barcode,
-} from '@capacitor-mlkit/barcode-scanning';
-// Fin | Scanner //
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -66,15 +58,6 @@ export class LoginPage implements OnInit {
 
   welcomeMessage = '¡Bienvenid@ a ';
   subMessage = 'Nos alegra verte otra vez 😊';
-
-  // Variables | Scanner //
-
-  // Array para almacenar códigos QR
-  barcodes: Barcode[] = [];
-  // Variable para almacenar la disponibilidad del escáner
-  isScannerSupported: boolean = false;
-
-  // Fin | Scanner //
 
   constructor(
     private toastController: ToastController // Indica que este componente depende del service StorageService inicializado en storage.service.ts
@@ -117,47 +100,4 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-
-  // METODOS | SCANNER //
-  // Instala el plugin GoogleBarcodeScanner
-  async installGoogleBarcodeScannerModule(): Promise<void> {
-    await BarcodeScanner.installGoogleBarcodeScannerModule();
-  }
-
-  // Solicita permisos al usuario para usar la cámara
-  async requestCameraPermissions(): Promise<boolean> {
-    // Almacena la propiedad "camera"
-    const { camera } = await BarcodeScanner.requestPermissions();
-
-    // Si los permisos para usar la cámara están activados por completo o parcialmente, retorna true
-    return camera === 'granted' || camera === 'limited';
-  }
-
-  // Escanea el código
-  async scan(): Promise<void> {
-    // Confirma ejecución del método
-    console.log('MÉTODO SCAN EJECUTADO');
-
-    // Verifica los permisos de cámara
-    const isPermissionGranted = await this.requestCameraPermissions();
-
-    // Si el permiso es denegado
-    if (!isPermissionGranted) {
-      console.log('PERMISO DENEGADO');
-      // Finaliza la ejecución del escáner
-      return;
-    }
-    // Instala el plugin de Google
-    this.installGoogleBarcodeScannerModule();
-
-    // Empieza la ejecución del escáner
-    console.log('EMPEZAR ESCANEO...');
-    const { barcodes } = await BarcodeScanner.scan({
-      formats: [BarcodeFormat.QrCode],
-    });
-    // Guarda el código escaneado el array
-    console.log('AGREGANDO CODIGO AL ARRAY...');
-    this.barcodes.push(...barcodes);
-  }
-  // FIN | SCANNER //
 }

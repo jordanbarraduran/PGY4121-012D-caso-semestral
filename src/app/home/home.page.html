@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true">
   <ion-card class="ion-text-center">
     <ion-card-header>
       <div style="display: flex; justify-content: center; margin-bottom: 20px">
@@ -27,17 +27,18 @@
         class="ion-margin-bottom"
         expand="block"
         shape="round"
-        (click)="unavailableFunctionToast()"
+        (click)="scan()"
       >
         <ion-icon name="qr-code-outline" slot="start"></ion-icon>
         Escanear QR
       </ion-button>
+
       <ion-button
         expand="block"
         shape="round"
         class="ion-margin-bottom"
         color="light"
-        (click)="unavailableFunctionToast()"
+        (click)="navigateToAttendance()"
       >
         <ion-icon name="book-outline" slot="start"></ion-icon>
         Asistencias
@@ -53,6 +54,10 @@
         Mi horario
       </ion-button>
     </ion-card-content>
+
+    <div>
+      <p>{{scanResult}}</p>
+    </div>
   </ion-card>
 
   <!-- TABS -->
@@ -66,7 +71,7 @@
         <ion-icon name="home-outline"></ion-icon>
         <ion-label>Inicio</ion-label>
       </ion-tab-button>
-      <ion-tab-button tab="scan" (click)="unavailableFunctionToast()">
+      <ion-tab-button tab="scan" (click)="scan()">
         <ion-icon name="qr-code-outline"></ion-icon>
         <ion-label>Escanear</ion-label>
       </ion-tab-button>
