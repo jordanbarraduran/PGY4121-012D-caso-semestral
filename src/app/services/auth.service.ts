@@ -46,24 +46,6 @@ export class AuthService {
       console.error('Credenciales inválidas');
       return false;
     }
-    /* 
-
-
-    // If user is valid
-      if (user) {
-        console.log('User found:', user);
-        await this.profileService.updateCurrentUser(user);
-        return true;
-      }
-
-      // If user is NOT valid
-      console.log('Invalid credentials');
-      return false;
-    } catch (error) {
-      // If login fails
-      console.error('Login error:', error);
-      return false;
-    } */
   }
 
   async logout() {

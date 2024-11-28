@@ -31,7 +31,7 @@ export class ProfileService {
 
   getFullName(): string {
     if (this.currentUser) {
-      return `${this.currentUser.nombre} ${this.currentUser.apellido}`;
+      return `${this.currentUser.nombre}`;
     }
     return '';
   }

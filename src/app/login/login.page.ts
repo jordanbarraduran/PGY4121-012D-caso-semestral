@@ -22,7 +22,7 @@ import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 // Import | Clase Usuario //
 import { AuthService } from '../services/auth.service';
-
+import { DataService } from '../services/data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -52,6 +52,7 @@ export class LoginPage implements OnInit {
   // Inyecta el servicio AuthService en la variable authService
   private authService = inject(AuthService);
   private router = inject(Router);
+  private dataService = inject(DataService);
 
   username = '';
   password = '';

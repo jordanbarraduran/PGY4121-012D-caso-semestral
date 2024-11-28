@@ -57,7 +57,7 @@ export class HomePage {
   username = this.currentUser?.nombre;
 
   // Variables | Asistencia //
-  listaAsignaturas = this.currentUser?.listaAsignaturas;
+  // listaAsignaturas = this.currentUser?.listaAsignaturas;
 
   // Variables | Scanner //
   // Almacenar texto del código QR
