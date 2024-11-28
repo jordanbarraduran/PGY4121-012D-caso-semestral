@@ -103,7 +103,7 @@ export class HomePage {
   }
 
   // Escanea el código
-  async scan(): Promise<void> {
+  /* async scan(): Promise<void> {
     // Confirma ejecución del método
     console.log('MÉTODO SCAN EJECUTADO');
 
@@ -163,5 +163,5 @@ export class HomePage {
       // IMPLEMENTAR: ALERT
       console.log('ESTE CODIGO QR NO ES VALIDO PARA ESTE USUARIO');
     }
-  }
+  } */
 }

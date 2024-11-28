@@ -35,7 +35,7 @@ import {
   keyOutline,
 } from 'ionicons/icons';
 import { ProfileService } from '../services/profile.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';

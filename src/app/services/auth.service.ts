@@ -35,11 +35,17 @@ export class AuthService {
     console.log('Login result:', result.user.uid);
     // Obtener rol del usuario desde Firestore
     const userDoc = await getDoc(doc(this.firestore, `users/${result.user.uid}`));
-    const currentUserlogged = userDoc.data() as User;
+    const currentLoggedInUser = userDoc.data() as User;
 
-    console.log('Current user:', currentUserlogged);
+    console.log('Current user:', currentLoggedInUser);
 
-    return true;
+    if (currentLoggedInUser) {
+      await this.profileService.updateCurrentUser(currentLoggedInUser);
+      return true;
+    } else {
+      console.error('Credenciales inválidas');
+      return false;
+    }
     /* 
 
 
