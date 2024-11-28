@@ -5,7 +5,11 @@ import { StorageService } from './storage.service';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { ProfileService } from './profile.service';
-
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { User } from '../models/user.model';
+import { doc, getDoc } from 'firebase/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -21,24 +25,25 @@ export class AuthService {
 
   public response: { users: any[] } | null = null;
 
-  constructor() {}
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+  ) {}
 
-  async login(username: string, password: string) {
-    try {
-      // Get users that match both username and password
-      this.response = await firstValueFrom(
-        this.http.get<{ users: any[] }>(this.apiUrl)
-      );
+  async login(email: string, password: string) {
+    const result = await signInWithEmailAndPassword(this.auth, email, password);
+    console.log('Login result:', result.user.uid);
+    // Obtener rol del usuario desde Firestore
+    const userDoc = await getDoc(doc(this.firestore, `users/${result.user.uid}`));
+    const currentUserlogged = userDoc.data() as User;
 
-      // Get array of users
-      const allUsers = this.response.users;
+    console.log('Current user:', currentUserlogged);
 
-      // Checks if user exists and is valid
-      const user = allUsers.find(
-        (u) => u.username === username && u.password === password
-      );
+    return true;
+    /* 
 
-      // If user is valid
+
+    // If user is valid
       if (user) {
         console.log('User found:', user);
         await this.profileService.updateCurrentUser(user);
@@ -52,7 +57,7 @@ export class AuthService {
       // If login fails
       console.error('Login error:', error);
       return false;
-    }
+    } */
   }
 
   async logout() {
