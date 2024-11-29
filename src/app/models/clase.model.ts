@@ -1,5 +1,6 @@
 export interface Clase {
-    seccionId: string;
-    horaInicio: string;
-    horaFin: string;
-  }
+  id?: string;
+  seccionId: string;
+  horaInicio: string;
+  horaFin: string;
+}

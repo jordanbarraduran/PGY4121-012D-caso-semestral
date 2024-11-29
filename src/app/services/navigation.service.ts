@@ -32,4 +32,14 @@ export class NavigationService {
   async navigateToScan() {
     await this.router.navigateByUrl('/');
   }
+
+  // Navegar | Vista Inicio
+  async navigateToHome() {
+    await this.router.navigateByUrl('/home');
+  }
+
+  // Navegar | Vista Admin
+  async navigateToAdmin() {
+    await this.router.navigateByUrl('/admin');
+  }
 }

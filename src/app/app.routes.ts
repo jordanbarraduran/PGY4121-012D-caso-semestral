@@ -35,11 +35,17 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./attendance/attendance.page').then((m) => m.AttendancePage),
   },
+  {
+    path: 'admin',
+    canActivate: [NoAuthenticationGuard],
+    loadComponent: () => import('./admin/admin.page').then( m => m.AdminPage)
+  },
   // IMPORTANTE: NotFound debe ser el último path de la lista, sino sobreescribe a los demás //
   {
     path: '**',
     loadComponent: () =>
       import('./notfound/notfound.page').then((m) => m.NotfoundPage),
   },
+
   // -------------------------------------------------------------- //
 ];

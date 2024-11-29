@@ -1,5 +1,6 @@
 export interface Seccion {
-    asignaturaId: string;
-    docenteId: string;
-    codigo: string;
-  }
+  id?: string;
+  asignaturaId: string;
+  docenteId: string;
+  codigo: string;
+}

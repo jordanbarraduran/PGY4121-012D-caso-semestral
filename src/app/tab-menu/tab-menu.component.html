@@ -1,14 +1,19 @@
 <ion-tabs>
   <ion-tab-bar slot="bottom">
+    <!-- ADMIN -->
+    <ion-tab-button *ngIf = "currentUser.rol === 'admin'" (click)="this.navigationService.navigateToAdmin()">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <ion-label>Admin</ion-label>
+    </ion-tab-button>
     <!-- INICIO -->
-    <ion-tab-button>
+    <ion-tab-button (click)="this.navigationService.navigateToHome()">
       <ion-icon name="home-outline"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
     <!-- ESCANER -->
     <ion-tab-button tab="scan">
       <ion-icon name="qr-code-outline"></ion-icon>
-      <ion-label>Escanear</ion-label>
+      <ion-label>{{ currentUser.rol === 'docente' ? 'Generar' : 'Escanear'}}</ion-label>
     </ion-tab-button>
     <!-- PERFIL -->
     <ion-tab-button (click)="this.navigationService.navigateToProfile()">

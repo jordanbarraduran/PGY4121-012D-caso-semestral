@@ -1,5 +1,5 @@
 export interface Asignatura {
-    codigo: string;
-    nombre: string;
-  }
-  
+  id?: string;
+  codigo: string;
+  nombre: string;
+}

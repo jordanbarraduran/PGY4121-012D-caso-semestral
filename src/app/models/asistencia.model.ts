@@ -1,5 +1,6 @@
 export interface Asistencia {
-    claseId: string;
-    estudianteId: string;
-    timestamp: string;
+  id?: string;
+  claseId: string;
+  estudianteId: string;
+  timestamp: string;
 }

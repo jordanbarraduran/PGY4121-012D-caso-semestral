@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
+import { TabMenuComponent } from '../tab-menu/tab-menu.component';
+
 import { IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -33,6 +35,7 @@ import {
   personOutline,
   schoolOutline,
   keyOutline,
+  shieldCheckmarkOutline,
 } from 'ionicons/icons';
 import { ProfileService } from '../services/profile.service';
 import { User } from '../models/user.model';
@@ -61,7 +64,9 @@ import { Router } from '@angular/router';
     IonCardContent,
     IonButton,
     IonIcon,
-    IonLabel, CommonModule, FormsModule]
+    IonLabel,
+    TabMenuComponent,
+    CommonModule, FormsModule]
 })
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
@@ -84,6 +89,7 @@ export class ProfilePage implements OnInit {
       'person-outline': personOutline,
       'school-outline': schoolOutline,
       'key-outline': keyOutline,
+      'shield-checkmark-outline': shieldCheckmarkOutline,
     });
   }
 

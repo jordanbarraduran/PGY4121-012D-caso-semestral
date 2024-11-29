@@ -1,6 +1,7 @@
 export interface User {
-    email: string;
-    role: string;
-    nombre: string;
-    carrera?: string;
-  }
+  id?: string;
+  email: string;
+  rol: string;
+  nombre: string;
+  carrera?: string;
+}
