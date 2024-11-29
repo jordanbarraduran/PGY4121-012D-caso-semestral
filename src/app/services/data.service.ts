@@ -113,6 +113,41 @@ export class DataService {
     }
   }
 
+  // Obtener asignaturas de un profesor específico
+  async getAsignaturasProfesor(docenteId: string): Promise<Asignatura[]> {
+    try {
+      // Primero obtenemos las secciones del profesor
+      const seccionesRef = collection(this.firestore, 'secciones');
+      const q = query(seccionesRef, where('docenteId', '==', docenteId));
+      const seccionesSnap = await getDocs(q);
+      const seccionesData = seccionesSnap.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data() as Seccion
+      }));
+  
+      // Obtenemos los IDs únicos de asignaturas
+      const asignaturasIds = [...new Set(seccionesData.map(s => s.asignaturaId))];
+  
+      // Obtenemos los detalles de cada asignatura
+      const asignaturas: Asignatura[] = [];
+      for (const asignaturaId of asignaturasIds) {
+        const asignaturaRef = doc(this.firestore, 'asignaturas', asignaturaId);
+        const asignaturaSnap = await getDoc(asignaturaRef);
+        if (asignaturaSnap.exists()) {
+          asignaturas.push({
+            id: asignaturaSnap.id,
+            ...asignaturaSnap.data() as Asignatura
+          });
+        }
+      }
+  
+      return asignaturas;
+    } catch (error) {
+      console.error('Error al obtener asignaturas del profesor:', error);
+      throw error;
+    }
+  }
+
   // Crear una nueva clase - será usada por el docente para generar QR de clase
   async createClase(clase: Partial<Clase>): Promise<string> {
     try {

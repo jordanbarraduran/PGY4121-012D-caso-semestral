@@ -1,9 +1,75 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">generar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+  <div [hidden]="mostrandoQR">
+    <!-- Selección de Asignatura y Sección -->
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccionar Clase</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="seleccionForm">
+          <ion-item>
+            <ion-label>Asignatura</ion-label>
+            <ion-select formControlName="asignaturaId" placeholder="Seleccione una asignatura">
+              <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">
+                {{asignatura.codigo}} - {{asignatura.nombre}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item *ngIf="asignaturaSeleccionada">
+            <ion-label>Sección</ion-label>
+            <ion-select formControlName="seccionId" placeholder="Seleccione una sección">
+              <ion-select-option *ngFor="let seccion of secciones" [value]="seccion.id">
+                Sección {{seccion.codigo}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Formulario de Nueva Clase (visible solo cuando se ha seleccionado una sección) -->
+    <ion-card *ngIf="seccionSeleccionada">
+      <ion-card-header>
+        <ion-card-title>Nueva Clase</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <form [formGroup]="claseForm" (ngSubmit)="generarClase()">
+          <ion-item>
+            <ion-label position="stacked">Hora de Inicio</ion-label>
+            <ion-input type="time" formControlName="horaInicio"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="stacked">Hora de Fin</ion-label>
+            <ion-input type="time" formControlName="horaFin"></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" 
+                      [disabled]="!claseForm.valid || !seleccionForm.valid" 
+                      class="ion-margin-top">
+            Generar QR
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Overlay del QR -->
+  <div class="qr-overlay" *ngIf="mostrandoQR">
+    <ion-card class="qr-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Código QR de la Clase</ion-card-title>
+      </ion-card-header>
+      <ion-card-content class="ion-text-center">
+        <qrcode [qrdata]="qrData" [width]="300" [errorCorrectionLevel]="'M'"></qrcode>
+        
+        <ion-button expand="block" (click)="volverAFormulario()" class="ion-margin-top">
+          Volver
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
   <app-tab-menu></app-tab-menu>
 </ion-content>

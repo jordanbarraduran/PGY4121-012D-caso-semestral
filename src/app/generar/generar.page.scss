@@ -1,0 +1,32 @@
+/* send class tofront to the front so that it don't collide*/
+ion-card,
+ion-segment {
+  position: relative;
+  z-index: 10;
+}
+
+.qr-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.qr-card {
+  background: white;
+  width: 90%;
+  max-width: 400px;
+  margin: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.qr-card ion-card-content {
+  padding: 20px;
+}
