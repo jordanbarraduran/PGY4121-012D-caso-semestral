@@ -11,9 +11,13 @@
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
     <!-- ESCANER -->
-    <ion-tab-button tab="scan">
+    <ion-tab-button *ngIf="currentUser.rol === 'docente'" (click)="this.navigationService.navigateToGenerateQR()">
       <ion-icon name="qr-code-outline"></ion-icon>
-      <ion-label>{{ currentUser.rol === 'docente' ? 'Generar' : 'Escanear'}}</ion-label>
+      <ion-label>Generar</ion-label>
+    </ion-tab-button>
+    <ion-tab-button *ngIf="!(currentUser.rol === 'docente')">
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>Escanear</ion-label>
     </ion-tab-button>
     <!-- PERFIL -->
     <ion-tab-button (click)="this.navigationService.navigateToProfile()">

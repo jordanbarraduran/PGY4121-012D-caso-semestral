@@ -36,7 +36,8 @@ export class AuthService {
     // Obtener rol del usuario desde Firestore
     const userDoc = await getDoc(doc(this.firestore, `users/${result.user.uid}`));
     const currentLoggedInUser = userDoc.data() as User;
-
+    // añadir uid al objeto de usuario
+    currentLoggedInUser.uid = result.user.uid;
     console.log('Current user:', currentLoggedInUser);
 
     if (currentLoggedInUser) {

@@ -42,4 +42,9 @@ export class NavigationService {
   async navigateToAdmin() {
     await this.router.navigateByUrl('/admin');
   }
+
+  // Navegar | Vista Generar QR
+  async navigateToGenerateQR() {
+    await this.router.navigateByUrl('/generar');
+  }
 }
