@@ -38,12 +38,13 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: [NoAuthenticationGuard],
-    loadComponent: () => import('./admin/admin.page').then( m => m.AdminPage)
+    loadComponent: () => import('./admin/admin.page').then((m) => m.AdminPage),
   },
   {
     path: 'generar',
     canActivate: [NoAuthenticationGuard],
-    loadComponent: () => import('./generar/generar.page').then( m => m.GenerarPage)
+    loadComponent: () =>
+      import('./generar/generar.page').then((m) => m.GenerarPage),
   },
   // IMPORTANTE: NotFound debe ser el último path de la lista, sino sobreescribe a los demás //
   {
@@ -51,7 +52,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./notfound/notfound.page').then((m) => m.NotfoundPage),
   },
-
 
   // -------------------------------------------------------------- //
 ];

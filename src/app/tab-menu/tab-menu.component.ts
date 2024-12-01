@@ -1,4 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
+
 import {
   IonTabs,
   IonTabBar,
@@ -6,12 +7,13 @@ import {
   IonIcon,
   IonLabel,
 } from '@ionic/angular/standalone';
-import { NavigationService } from '../services/navigation.service';
 import { CommonModule } from '@angular/common';
-import { ProfileService } from '../services/profile.service';
 import { User } from '../models/user.model';
 import { shieldCheckmarkOutline } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+// SERVICES //
+import { ProfileService } from '../services/profile.service';
+import { NavigationService } from '../services/navigation.service';
 
 @Component({
   standalone: true,
@@ -24,8 +26,8 @@ export class TabMenuComponent implements OnInit {
   navigationService = inject(NavigationService);
   currentUser = inject(ProfileService).getCurrentUser() as User;
 
-
   constructor() {
+    console.log('TAB-MENU INICIALIZADO');
     addIcons({
       'shield-checkmark-outline': shieldCheckmarkOutline,
     });

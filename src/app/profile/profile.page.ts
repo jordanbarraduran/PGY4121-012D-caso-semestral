@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
 import { TabMenuComponent } from '../tab-menu/tab-menu.component';
-
-import { IonCard,
+import {
+  IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
@@ -20,7 +20,8 @@ import { IonCard,
   IonCardContent,
   IonButton,
   IonIcon,
-  IonLabel, } from '@ionic/angular/standalone';
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   qrCodeOutline,
@@ -48,7 +49,8 @@ import { Router } from '@angular/router';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonCard,
+  imports: [
+    IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
@@ -66,7 +68,9 @@ import { Router } from '@angular/router';
     IonIcon,
     IonLabel,
     TabMenuComponent,
-    CommonModule, FormsModule]
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
@@ -106,7 +110,7 @@ export class ProfilePage implements OnInit {
   async goToHome() {
     console.log('Método goToHome.');
     this.router.navigate(['/home']);
-  }  
+  }
 
   ionViewWillEnter() {
     this.currentUser = this.profileService.getCurrentUser();
