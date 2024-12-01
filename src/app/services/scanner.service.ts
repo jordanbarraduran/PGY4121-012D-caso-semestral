@@ -1,15 +1,23 @@
-import { Injectable } from '@angular/core';
-
+import { inject, Injectable } from '@angular/core';
 // Import | Scanner //
 import {
   BarcodeScanner,
   BarcodeFormat,
 } from '@capacitor-mlkit/barcode-scanning';
+// MODELOS //
+import { Asistencia } from '../models/asistencia.model';
+// SERVICIOS //
+import { ProfileService } from './profile.service';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ScannerService {
+  // SERVICIOS //
+  private profileService = inject(ProfileService);
+  private dataService = inject(DataService);
+
   // Variables | Scanner //
   // Almacenar texto del código QR
   scanResult: string = '';
@@ -63,15 +71,32 @@ export class ScannerService {
     // IMPLEMENTAR: REGEX PARA VALIDAR FORMATO DE CODIGO QR
 
     // EXTRAER DATOS //
+    // Convertir string en JSON
+    const dataQR = JSON.parse(this.scanResult);
     // Extrae datos del código QR
-    const [asignatura, seccion, sala, fecha] = this.scanResult.split('|');
+    const { claseId, seccionId, horaInicio, horaFin } = dataQR;
+    const estudianteId = this.profileService.getCurrentUser()?.uid;
+    const currentDate = new Date();
+    const timestamp = currentDate.getHours() + ':' + currentDate.getMinutes();
 
     // TESTING //
-    console.log('ASIGNATURA: ' + asignatura);
-    console.log('SECCION: ' + seccion);
-    console.log('SALA: ' + sala);
-    console.log('FECHA: ' + fecha);
-    //
+    console.log('CLASE ID: ' + claseId);
+    console.log('SECCION ID: ' + seccionId);
+    console.log('HORA INICIO: ' + horaInicio);
+    console.log('HORA FIN: ' + horaFin);
+    console.log('-----------------');
+    // --------------- //
+
+    // Crea una instancia de Asistencia
+    if (estudianteId) {
+      let nuevaAsistencia: Asistencia = {
+        claseId: claseId,
+        estudianteId: estudianteId,
+        timestamp: timestamp,
+      };
+
+      this.dataService.registrarAsistencia(nuevaAsistencia);
+    }
 
     /*
     // Valida si la asignatura y sección corresponden al usuario
@@ -81,21 +106,12 @@ export class ScannerService {
     );
 
     if (foundSubject) {
-                  //
-
-      // Crea una instancia de Asistencia
-      let asistencia: DataQR = {
-        asignatura: asignatura,
-        seccion: seccion,
-        sala: sala,
-        fecha: fecha,
-      };
-
       // Almacena la instancia en el storage
       this.storage.setItem('asistencia', asistencia);
     } else {
       // IMPLEMENTAR: ALERT
       console.log('ESTE CODIGO QR NO ES VALIDO PARA ESTE USUARIO');
-    }*/
+    }
+    */
   }
 }

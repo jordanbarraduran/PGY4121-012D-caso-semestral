@@ -123,7 +123,7 @@ export class GenerarPage implements OnInit {
       const usuario = this.profileService.getCurrentUser();
       if (usuario) {
         this.asignaturas = await this.dataService.getAsignaturasProfesor(
-          usuario.uid!,
+          usuario.uid!
         );
       }
     } catch (error) {
@@ -137,11 +137,11 @@ export class GenerarPage implements OnInit {
       const usuario = this.profileService.getCurrentUser();
       if (usuario) {
         this.secciones = await this.dataService.getSeccionesByProfesor(
-          usuario.uid!,
+          usuario.uid!
         );
         // Filtramos las secciones que corresponden a la asignatura seleccionada
         this.secciones = this.secciones.filter(
-          (s) => s.asignaturaId === asignaturaId,
+          (s) => s.asignaturaId === asignaturaId
         );
       }
     } catch (error) {
