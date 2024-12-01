@@ -13,10 +13,10 @@ import {
   IonAccordion,
   IonAccordionGroup,
   IonItem,
-  IonIcon,
+  IonButton,
 } from '@ionic/angular/standalone';
-
-import { AttendanceService } from '../services/attendance.service';
+import { DataService } from '../services/data.service';
+import { Asignatura } from '../models/asignatura.model';
 
 @Component({
   selector: 'app-attendance',
@@ -36,20 +36,21 @@ import { AttendanceService } from '../services/attendance.service';
     IonAccordion,
     IonAccordionGroup,
     IonItem,
-    IonIcon,
+    IonButton,
     TabMenuComponent,
   ],
 })
 export class AttendancePage implements OnInit {
-  private attendanceService = inject(AttendanceService);
-  asistencia = this.attendanceService.asistenciaData;
-  asistenciaData = this.asistencia.then((data) => {
-    return data.asignatura;
-  });
+  dataService = inject(DataService);
+  asignaturas: Asignatura[] = [];
 
   constructor() {}
 
   ngOnInit() {
-    console.log('ASISTENCIA DATA: ' + this.asistenciaData);
+    this.dataService.getSubjects().then((asignaturaArray) => {
+      asignaturaArray.map((asignatura) => {
+        this.asignaturas.push(asignatura);
+      });
+    });
   }
 }

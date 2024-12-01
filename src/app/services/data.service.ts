@@ -1,35 +1,46 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, query, where, doc, updateDoc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDoc,
+} from '@angular/fire/firestore';
 import { Asignatura } from '../models/asignatura.model';
 import { Seccion } from '../models/seccion.model';
 import { User } from '../models/user.model';
 import { Clase } from '../models/clase.model';
 import { Asistencia } from '../models/asistencia.model';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataService {
   private firestore = inject(Firestore);
 
-  constructor() { }
+  constructor() {}
 
   // Métodos para Usuarios
   async getUser(userId: string): Promise<User | null> {
     try {
       const userDocRef = doc(this.firestore, 'users', userId);
       const userDoc = await getDoc(userDocRef);
-      
+
       if (userDoc.exists()) {
         // We create a User object that matches our interface
         const userData = userDoc.data();
         const user: User = {
-          uid: userDoc.id,  // Document ID becomes the uid
+          uid: userDoc.id, // Document ID becomes the uid
           email: userData['email'],
           rol: userData['rol'],
           nombre: userData['nombre'],
-          carrera: userData['carrera'] // This will be undefined if not present, which is fine due to optional ?
+          carrera: userData['carrera'], // This will be undefined if not present, which is fine due to optional ?
         };
-        
+
         return user;
       } else {
         console.log('No se encontró usuario con ID:', userId);
@@ -44,7 +55,10 @@ export class DataService {
   // Métodos para Asignaturas
   async createSubject(asignatura: Partial<Asignatura>): Promise<string> {
     try {
-      const docRef = await addDoc(collection(this.firestore, 'asignaturas'), asignatura);
+      const docRef = await addDoc(
+        collection(this.firestore, 'asignaturas'),
+        asignatura
+      );
       console.log('Asignatura creada con ID:', docRef.id);
       return docRef.id;
     } catch (error) {
@@ -55,10 +69,12 @@ export class DataService {
 
   async getSubjects(): Promise<Asignatura[]> {
     try {
-      const querySnapshot = await getDocs(collection(this.firestore, 'asignaturas'));
-      return querySnapshot.docs.map(doc => ({
+      const querySnapshot = await getDocs(
+        collection(this.firestore, 'asignaturas')
+      );
+      return querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data() as Asignatura
+        ...(doc.data() as Asignatura),
       }));
     } catch (error) {
       console.error('Error al obtener asignaturas:', error);
@@ -69,7 +85,10 @@ export class DataService {
   // Métodos para Secciones
   async createSection(seccion: Partial<Seccion>): Promise<string> {
     try {
-      const docRef = await addDoc(collection(this.firestore, 'secciones'), seccion);
+      const docRef = await addDoc(
+        collection(this.firestore, 'secciones'),
+        seccion
+      );
       console.log('Sección creada con ID:', docRef.id);
       return docRef.id;
     } catch (error) {
@@ -85,9 +104,9 @@ export class DataService {
         where('asignaturaId', '==', asignaturaId)
       );
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
+      return querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data() as Seccion
+        ...(doc.data() as Seccion),
       }));
     } catch (error) {
       console.error('Error al obtener secciones:', error);
@@ -103,9 +122,9 @@ export class DataService {
         where('docenteId', '==', profesorId)
       );
       const querySnapshot = await getDocs(q);
-      return querySnapshot.docs.map(doc => ({
+      return querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data() as Seccion
+        ...(doc.data() as Seccion),
       }));
     } catch (error) {
       console.error('Error al obtener secciones del profesor:', error);
@@ -120,14 +139,16 @@ export class DataService {
       const seccionesRef = collection(this.firestore, 'secciones');
       const q = query(seccionesRef, where('docenteId', '==', docenteId));
       const seccionesSnap = await getDocs(q);
-      const seccionesData = seccionesSnap.docs.map(doc => ({
+      const seccionesData = seccionesSnap.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data() as Seccion
+        ...(doc.data() as Seccion),
       }));
-  
+
       // Obtenemos los IDs únicos de asignaturas
-      const asignaturasIds = [...new Set(seccionesData.map(s => s.asignaturaId))];
-  
+      const asignaturasIds = [
+        ...new Set(seccionesData.map((s) => s.asignaturaId)),
+      ];
+
       // Obtenemos los detalles de cada asignatura
       const asignaturas: Asignatura[] = [];
       for (const asignaturaId of asignaturasIds) {
@@ -136,11 +157,11 @@ export class DataService {
         if (asignaturaSnap.exists()) {
           asignaturas.push({
             id: asignaturaSnap.id,
-            ...asignaturaSnap.data() as Asignatura
+            ...(asignaturaSnap.data() as Asignatura),
           });
         }
       }
-  
+
       return asignaturas;
     } catch (error) {
       console.error('Error al obtener asignaturas del profesor:', error);
@@ -162,11 +183,22 @@ export class DataService {
   // Registrar asistencia
   async registrarAsistencia(asistencia: Partial<Asistencia>): Promise<string> {
     try {
-      const docRef = await addDoc(collection(this.firestore, 'asistencias'), asistencia);
+      const docRef = await addDoc(
+        collection(this.firestore, 'asistencias'),
+        asistencia
+      );
       return docRef.id;
     } catch (error) {
       console.error('Error al registrar asistencia:', error);
       throw error;
     }
   }
+
+  // Obtener Asistencias
+  /*
+  async obtenerAsistenciasPorEstudiante(
+    estudianteId: string
+  ): Promise<Asistencia[] | null> {
+    return;
+  }*/
 }

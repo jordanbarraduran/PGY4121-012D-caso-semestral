@@ -1,11 +1,17 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+  FormsModule,
+} from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { ProfileService } from '../services/profile.service';
 import { Asignatura } from '../models/asignatura.model';
 import { Seccion } from '../models/seccion.model';
-import { 
-  AlertController, 
+import {
+  AlertController,
   IonHeader,
   IonToolbar,
   IonButtons,
@@ -26,7 +32,7 @@ import {
   IonButton,
   IonList,
   IonSelect,
-  IonSelectOption
+  IonSelectOption,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
 import { TabMenuComponent } from '../tab-menu/tab-menu.component';
@@ -62,8 +68,8 @@ import { TabMenuComponent } from '../tab-menu/tab-menu.component';
     IonButton,
     IonList,
     IonSelect,
-    IonSelectOption
-  ]
+    IonSelectOption,
+  ],
 })
 export class AdminPage implements OnInit {
   // Inyección de servicios mediante inject()
@@ -83,12 +89,12 @@ export class AdminPage implements OnInit {
     // Inicializamos los formularios con sus validadores
     this.asignaturaForm = this.fb.group({
       codigo: ['', [Validators.required, Validators.minLength(2)]],
-      nombre: ['', [Validators.required, Validators.minLength(3)]]
+      nombre: ['', [Validators.required, Validators.minLength(3)]],
     });
 
     this.seccionForm = this.fb.group({
       asignaturaId: ['', Validators.required],
-      codigo: ['', [Validators.required, Validators.minLength(1)]]
+      codigo: ['', [Validators.required, Validators.minLength(1)]],
     });
   }
 
@@ -133,7 +139,9 @@ export class AdminPage implements OnInit {
     if (selectedSubjectId) {
       try {
         // Cargamos las secciones de la asignatura seleccionada
-        this.secciones = await this.dataService.getSectionsBySubject(selectedSubjectId);
+        this.secciones = await this.dataService.getSectionsBySubject(
+          selectedSubjectId
+        );
       } catch (error) {
         this.showAlert('Error', 'No se pudieron cargar las secciones');
         console.error('Error al cargar secciones:', error);
@@ -168,7 +176,7 @@ export class AdminPage implements OnInit {
 
         const seccionData = {
           ...this.seccionForm.value,
-          teacherId: currentUser.uid
+          teacherId: currentUser.uid,
         };
 
         await this.dataService.createSection(seccionData);
@@ -185,7 +193,7 @@ export class AdminPage implements OnInit {
     const alert = await this.alertController.create({
       header,
       message,
-      buttons: ['OK']
+      buttons: ['OK'],
     });
     await alert.present();
   }

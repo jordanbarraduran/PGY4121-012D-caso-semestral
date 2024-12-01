@@ -9,15 +9,16 @@
 
     <ion-card-content>
       <ion-accordion-group>
-        <ion-accordion value="first">
+        <ion-accordion
+          *ngFor="let asignatura of asignaturas"
+          [value]="asignatura.id"
+        >
           <ion-item slot="header" color="light">
-            <ion-label>Programación de Aplicaciones Móviles</ion-label>
+            <ion-label>{{asignatura.nombre}}</ion-label>
           </ion-item>
           <div class="ion-padding" slot="content">
             <ul>
-              <li>Asistencia 1</li>
-              <li>Asistencia 2</li>
-              <li>Asistencia 3</li>
+              <li>asistencia</li>
             </ul>
           </div>
         </ion-accordion>

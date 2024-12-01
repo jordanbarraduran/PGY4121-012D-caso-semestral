@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ToastController, ModalController, IonicModule } from '@ionic/angular';
+import { ToastController, IonicModule } from '@ionic/angular';
 import { TabMenuComponent } from '../tab-menu/tab-menu.component';
 import { NavigationService } from '../services/navigation.service';
 import { addIcons } from 'ionicons';
@@ -29,10 +29,7 @@ export class HomePage {
   // Variables | Asistencia //
   // listaAsignaturas = this.currentUser?.listaAsignaturas;
 
-  constructor(
-    private toastController: ToastController,
-    private modalController: ModalController
-  ) {
+  constructor(private toastController: ToastController) {
     addIcons({
       'qr-code-outline': qrCodeOutline,
       'time-outline': timeOutline,
