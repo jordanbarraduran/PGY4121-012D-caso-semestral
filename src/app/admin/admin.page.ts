@@ -176,7 +176,7 @@ export class AdminPage implements OnInit {
 
         const seccionData = {
           ...this.seccionForm.value,
-          teacherId: currentUser.uid,
+          docenteId: currentUser.uid,
         };
 
         await this.dataService.createSection(seccionData);
