@@ -77,7 +77,14 @@ export class ScannerService {
     const { claseId, seccionId, horaInicio, horaFin } = dataQR;
     const estudianteId = this.profileService.getCurrentUser()?.uid;
     const currentDate = new Date();
-    const timestamp = currentDate.getHours() + ':' + currentDate.getMinutes();
+    const fecha =
+      currentDate.getDate() +
+      '-' +
+      (currentDate.getMonth() + 1) +
+      '-' +
+      currentDate.getFullYear();
+    const hora = currentDate.getHours() + ':' + currentDate.getMinutes();
+    const timestamp = fecha + ' | ' + hora;
 
     // TESTING //
     console.log('CLASE ID: ' + claseId);

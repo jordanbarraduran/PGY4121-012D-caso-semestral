@@ -82,6 +82,30 @@ export class DataService {
     }
   }
 
+  // obtener asignatura por id
+  async getSubjectById(asignaturaId: string): Promise<Asignatura | null> {
+    try {
+      const asignaturaDocRef = doc(this.firestore, 'asignaturas', asignaturaId);
+      const asignaturaDoc = await getDoc(asignaturaDocRef);
+
+      if (asignaturaDoc.exists()) {
+        // We create a User object that matches our interface
+        const asignaturaData = asignaturaDoc.data();
+        const asignatura: Asignatura = {
+          codigo: asignaturaData['codigo'],
+          nombre: asignaturaData['nombre'],
+        };
+        return asignatura;
+      } else {
+        console.log('No se encontró la asignatura:', asignaturaId);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error al obtener asignatura:', error);
+      throw error;
+    }
+  }
+
   // Métodos para Secciones
   async createSection(seccion: Partial<Seccion>): Promise<string> {
     try {
@@ -195,10 +219,30 @@ export class DataService {
   }
 
   // Obtener Asistencias
-  /*
-  async obtenerAsistenciasPorEstudiante(
+  async getAsistenciasPorEstudiante(
     estudianteId: string
-  ): Promise<Asistencia[] | null> {
-    return;
-  }*/
+  ): Promise<Asistencia[]> {
+    try {
+      const asistenciasRef = collection(this.firestore, 'asistencias');
+      const q = query(
+        asistenciasRef,
+        where('estudianteId', '==', estudianteId)
+      );
+      const asistenciasSnap = await getDocs(q);
+      const asistenciasData = asistenciasSnap.docs.map((doc) => ({
+        id: doc.id,
+        ...(doc.data() as Asistencia),
+      }));
+
+      const asistencias: Asistencia[] = [];
+
+      for (let a of asistenciasData) {
+        asistencias.push(a);
+      }
+      return asistencias;
+    } catch (error) {
+      console.error('Error al obtener asistencias: ', error);
+      throw error;
+    }
+  }
 }

@@ -14,9 +14,13 @@ import {
   IonAccordionGroup,
   IonItem,
   IonButton,
+  IonList,
+  IonIcon,
 } from '@ionic/angular/standalone';
 import { DataService } from '../services/data.service';
 import { Asignatura } from '../models/asignatura.model';
+import { ProfileService } from '../services/profile.service';
+import { Asistencia } from '../models/asistencia.model';
 
 @Component({
   selector: 'app-attendance',
@@ -24,6 +28,8 @@ import { Asignatura } from '../models/asignatura.model';
   styleUrls: ['./attendance.page.scss'],
   standalone: true,
   imports: [
+    IonIcon,
+    IonList,
     IonCard,
     IonCardHeader,
     IonCardSubtitle,
@@ -42,15 +48,22 @@ import { Asignatura } from '../models/asignatura.model';
 })
 export class AttendancePage implements OnInit {
   dataService = inject(DataService);
+  profileService = inject(ProfileService);
   asignaturas: Asignatura[] = [];
+  asistencias: Asistencia[] = [];
+  currentUser = this.profileService.getCurrentUser()?.uid;
 
   constructor() {}
 
   ngOnInit() {
-    this.dataService.getSubjects().then((asignaturaArray) => {
-      asignaturaArray.map((asignatura) => {
-        this.asignaturas.push(asignatura);
-      });
-    });
+    if (this.currentUser) {
+      this.dataService
+        .getAsistenciasPorEstudiante(this.currentUser)
+        .then((asistenciasArray) => {
+          asistenciasArray.map((asistencia) => {
+            this.asistencias.push(asistencia);
+          });
+        });
+    }
   }
 }
