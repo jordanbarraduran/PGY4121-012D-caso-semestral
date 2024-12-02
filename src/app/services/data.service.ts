@@ -234,6 +234,8 @@ export class DataService {
         ...(doc.data() as Asistencia),
       }));
 
+      console.log(asistenciasData);
+
       const asistencias: Asistencia[] = [];
 
       for (let a of asistenciasData) {
