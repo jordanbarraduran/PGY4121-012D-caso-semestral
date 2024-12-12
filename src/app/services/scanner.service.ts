@@ -9,6 +9,7 @@ import { Asistencia } from '../models/asistencia.model';
 // SERVICIOS //
 import { ProfileService } from './profile.service';
 import { DataService } from './data.service';
+import { AlertController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +25,7 @@ export class ScannerService {
   // Variable para almacenar la disponibilidad del escáner
   isScannerSupported: boolean = false;
 
-  constructor() {}
+  constructor(private scanAlertController: AlertController) {}
 
   // METODOS | SCANNER //
   // Instala el plugin GoogleBarcodeScanner
@@ -104,9 +105,24 @@ export class ScannerService {
       };
 
       try {
+        // Registra la asistencia en la base de datos
         this.dataService.registrarAsistencia(nuevaAsistencia);
-        console.log('CODIGO ESCANEADO CORRECTAMENTE');
+        // Muestra mensaje de éxito al usuario
+        const successAlert = await this.scanAlertController.create({
+          header: 'Código escaneado correctamente',
+          message:
+            'El código QR fue escaneado correctamente y su asistencia quedó registrada.',
+          buttons: [{ text: 'Aceptar' }],
+        });
+        await successAlert.present();
       } catch (error) {
+        // Muestra mensaje de error al usuario
+        const errorAlert = await this.scanAlertController.create({
+          header: 'Error al escanear código',
+          message: `Ocurrió el siguiente error al escanear el código QR: [${error}]`,
+          buttons: [{ text: 'Aceptar' }],
+        });
+        await errorAlert.present();
         console.log(error);
       }
     }

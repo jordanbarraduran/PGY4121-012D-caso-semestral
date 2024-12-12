@@ -23,7 +23,21 @@ export class NavigationService {
 
   // Abrir | Escaner
   async openScanner() {
-    this.scannerService.scan();
+    const confirmDialogAlert = await this.confirmDialogController.create({
+      header: 'Acción crítica',
+      message:
+        'Una vez ejecutada esta acción, no podrá ser revertida, ¿desea continuar?',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Confirmar',
+          handler: () => {
+            this.scannerService.scan();
+          },
+        },
+      ],
+    });
+    await confirmDialogAlert.present();
   }
 
   // Navegar | Vista Recuperar Contraseña
@@ -60,16 +74,5 @@ export class NavigationService {
   async navigateToGenerateQR() {
     console.log('FUNCION: navigateToGenerateQR()');
     await this.router.navigateByUrl('/generar');
-  }
-
-  async openConfirmDialog() {
-    const confirmDialogAlert = await this.confirmDialogController.create({
-      header: 'Acción crítica',
-      message:
-        'Una vez ejecutada esta acción, no podrá ser revertida, ¿seguro que desea continuar?',
-      buttons: ['Cancelar', 'Confirmar'],
-    });
-
-    await confirmDialogAlert.present();
   }
 }
