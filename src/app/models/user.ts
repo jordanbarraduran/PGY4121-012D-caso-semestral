@@ -1,3 +1,5 @@
+import { Subject } from './subject';
+
 export interface User {
   id: string;
   username: string;
@@ -9,4 +11,5 @@ export interface User {
   role: string;
   createdAt: Date;
   updatedAt: Date;
+  listaAsignaturas: Subject[];
 }

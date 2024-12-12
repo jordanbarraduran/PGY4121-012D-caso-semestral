@@ -1,8 +1,10 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true">
   <ion-card class="ion-text-center">
     <ion-card-header>
       <ion-card-title class="ion-margin-top">{{ userFullName }}</ion-card-title>
-      <ion-card-subtitle *ngIf="currentUser">{{ currentUser.role | titlecase }}</ion-card-subtitle>
+      <ion-card-subtitle *ngIf="currentUser"
+        >{{ currentUser.rol | titlecase }}</ion-card-subtitle
+      >
     </ion-card-header>
 
     <div class="divider"></div>
@@ -10,7 +12,11 @@
     <ion-card-content>
       <ion-list lines="none" *ngIf="currentUser">
         <ion-item>
-          <ion-icon name="school-outline" slot="start" color="primary"></ion-icon>
+          <ion-icon
+            name="school-outline"
+            slot="start"
+            color="primary"
+          ></ion-icon>
           <ion-label>
             <h2>Carrera</h2>
             <p>{{ currentUser.carrera | titlecase }}</p>
@@ -18,10 +24,14 @@
         </ion-item>
 
         <ion-item>
-          <ion-icon name="person-outline" slot="start" color="primary"></ion-icon>
+          <ion-icon
+            name="person-outline"
+            slot="start"
+            color="primary"
+          ></ion-icon>
           <ion-label>
             <h2>Nombre de usuario</h2>
-            <p>{{ currentUser.username }}</p>
+            <p>{{ currentUser.nombre }}</p>
           </ion-label>
         </ion-item>
 
@@ -33,16 +43,20 @@
           </ion-label>
         </ion-item>
 
-        <ion-item>
-          <ion-icon name="calendar-outline" slot="start" color="primary"></ion-icon>
+        <!-- <ion-item> BORRAR ESTA??
+          <ion-icon
+            name="calendar-outline"
+            slot="start"
+            color="primary"
+          ></ion-icon>
           <ion-label>
             <h2>Fecha de registro</h2>
-            <p>{{ getFormattedDate(currentUser.createdAt) }}</p>
-          </ion-label>
-        </ion-item>
+            <p></p>
+          </ion-label>A
+        </ion-item> -->
       </ion-list>
 
-      <div class="ion-margin-top">
+      <!-- <div class="ion-margin-top">
         <ion-button
           expand="block"
           shape="round"
@@ -53,7 +67,7 @@
           <ion-icon name="create-outline" slot="start"></ion-icon>
           Editar perfil
         </ion-button>
-        
+
         <ion-button
           expand="block"
           shape="round"
@@ -64,28 +78,9 @@
           <ion-icon name="key-outline" slot="start"></ion-icon>
           Cambiar contraseña
         </ion-button>
-      </div>
+      </div> -->
     </ion-card-content>
   </ion-card>
 
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
-      <ion-tab-button>
-        <ion-icon name="person-circle-outline"></ion-icon>
-        <ion-label>Mi perfil</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="goToHome()">
-        <ion-icon name="home-outline"></ion-icon>
-        <ion-label>Inicio</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="unavailableFunctionToast()">
-        <ion-icon name="qr-code-outline"></ion-icon>
-        <ion-label>Escanear</ion-label>
-      </ion-tab-button>
-      <ion-tab-button (click)="logout()">
-        <ion-icon name="log-out-outline"></ion-icon>
-        <ion-label>Cerrar sesión</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+  <app-tab-menu></app-tab-menu>
 </ion-content>

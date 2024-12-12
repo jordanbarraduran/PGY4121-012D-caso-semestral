@@ -1,26 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-
-import {
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonList,
-  IonItem,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonTabs,
-  IonTabBar,
-  IonTabButton,
-  IonCardContent,
-  IonButton,
-  IonIcon,
-  IonLabel,
-} from '@ionic/angular/standalone';
-
+import { ToastController, IonicModule } from '@ionic/angular';
+import { TabMenuComponent } from '../tab-menu/tab-menu.component';
+import { NavigationService } from '../services/navigation.service';
 import { addIcons } from 'ionicons';
 import {
   qrCodeOutline,
@@ -30,41 +11,23 @@ import {
   logOutOutline,
   personCircleOutline,
 } from 'ionicons/icons';
-import { User } from '../models/user';
-import { AuthService } from '../services/auth.service';
 import { ProfileService } from '../services/profile.service';
-import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
   standalone: true,
-  imports: [
-    IonCard,
-    IonCardHeader,
-    IonCardTitle,
-    IonCardSubtitle,
-    IonList,
-    IonItem,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonTabs,
-    IonTabBar,
-    IonTabButton,
-    IonCardContent,
-    IonButton,
-    IonIcon,
-    IonLabel,
-  ],
+  imports: [IonicModule, TabMenuComponent],
 })
 export class HomePage {
-  private authService = inject(AuthService);
-  private router = inject(Router);
   private profileService = inject(ProfileService);
   private currentUser = this.profileService.getCurrentUser();
   username = this.currentUser?.nombre;
+  navigationService = inject(NavigationService);
+
+  // Variables | Asistencia //
+  // listaAsignaturas = this.currentUser?.listaAsignaturas;
 
   constructor(private toastController: ToastController) {
     addIcons({
@@ -75,16 +38,6 @@ export class HomePage {
       'log-out-outline': logOutOutline,
       'person-circle-outline': personCircleOutline,
     });
-  }
-
-  async logout() {
-    console.log('Método logout.');
-    await this.authService.logout();
-  }
-
-  async goToProfile() {
-    console.log('Método goToProfile.');
-    await this.router.navigateByUrl('/profile');
   }
 
   async unavailableFunctionToast() {

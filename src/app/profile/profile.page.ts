@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ToastController } from '@ionic/angular';
-import { IonCard,
+import { TabMenuComponent } from '../tab-menu/tab-menu.component';
+import {
+  IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardSubtitle,
@@ -18,7 +20,8 @@ import { IonCard,
   IonCardContent,
   IonButton,
   IonIcon,
-  IonLabel, } from '@ionic/angular/standalone';
+  IonLabel,
+} from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import {
   qrCodeOutline,
@@ -33,9 +36,10 @@ import {
   personOutline,
   schoolOutline,
   keyOutline,
+  shieldCheckmarkOutline,
 } from 'ionicons/icons';
 import { ProfileService } from '../services/profile.service';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
@@ -45,7 +49,8 @@ import { Router } from '@angular/router';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   standalone: true,
-  imports: [IonCard,
+  imports: [
+    IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardSubtitle,
@@ -61,7 +66,11 @@ import { Router } from '@angular/router';
     IonCardContent,
     IonButton,
     IonIcon,
-    IonLabel, CommonModule, FormsModule]
+    IonLabel,
+    TabMenuComponent,
+    CommonModule,
+    FormsModule,
+  ],
 })
 export class ProfilePage implements OnInit {
   private authService = inject(AuthService);
@@ -84,6 +93,7 @@ export class ProfilePage implements OnInit {
       'person-outline': personOutline,
       'school-outline': schoolOutline,
       'key-outline': keyOutline,
+      'shield-checkmark-outline': shieldCheckmarkOutline,
     });
   }
 
@@ -100,7 +110,7 @@ export class ProfilePage implements OnInit {
   async goToHome() {
     console.log('Método goToHome.');
     this.router.navigate(['/home']);
-  }  
+  }
 
   ionViewWillEnter() {
     this.currentUser = this.profileService.getCurrentUser();

@@ -1,0 +1,5 @@
+/* send class tofront to the front so that it don't collide*/
+ion-card, ion-segment {
+  position: relative;
+  z-index: 10;
+}

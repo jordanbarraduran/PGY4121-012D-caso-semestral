@@ -1,0 +1,129 @@
+<ion-content class="ion-padding">
+  <ion-segment [(ngModel)]="currentSegment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="asignaturas">
+      <ion-label>Asignaturas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="secciones">
+      <ion-label>Secciones</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="tofront" [ngSwitch]="currentSegment">
+    <!-- Sección de Asignaturas -->
+    <div *ngSwitchCase="'asignaturas'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Nueva Asignatura</ion-card-title>
+          <ion-card-subtitle>Ingrese los datos de la asignatura</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="asignaturaForm" (ngSubmit)="onSubmitSubject()">
+            <ion-item>
+              <ion-label position="stacked">Código</ion-label>
+              <ion-input formControlName="codigo" type="text" placeholder="Ej: MAT101"></ion-input>
+              <ion-note slot="error" *ngIf="asignaturaForm.get('codigo')?.touched && asignaturaForm.get('codigo')?.errors?.['required']">
+                El código es requerido
+              </ion-note>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Nombre</ion-label>
+              <ion-input formControlName="nombre" type="text" placeholder="Ej: Matemáticas I"></ion-input>
+              <ion-note slot="error" *ngIf="asignaturaForm.get('nombre')?.touched && asignaturaForm.get('codigo')?.errors?.['required']">
+                El nombre es requerido
+              </ion-note>
+            </ion-item>
+
+            <ion-button expand="block" type="submit" [disabled]="!asignaturaForm.valid" class="ion-margin-top">
+              Crear Asignatura
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Asignaturas Existentes</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <ion-item *ngFor="let asignatura of asignaturas">
+              <ion-label>
+                <h2>{{asignatura.codigo}}</h2>
+                <p>{{asignatura.nombre}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- Vista de Secciones -->
+    <div *ngSwitchCase="'secciones'">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Nueva Sección</ion-card-title>
+          <ion-card-subtitle>Asigne una sección a una asignatura</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <form [formGroup]="seccionForm" (ngSubmit)="onSubmitSection()">
+            <ion-item>
+              <ion-label>Asignatura</ion-label>
+              <ion-select 
+                formControlName="asignaturaId" 
+                placeholder="Seleccione una asignatura"
+                (ionChange)="onSubjectChange($event)">
+                <ion-select-option *ngFor="let asignatura of asignaturas" [value]="asignatura.id">
+                  {{asignatura.codigo}} - {{asignatura.nombre}}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Código de Sección</ion-label>
+              <ion-input formControlName="codigo" type="text" placeholder="Ej: 001"></ion-input>
+            </ion-item>
+
+            <ion-button expand="block" type="submit" [disabled]="!seccionForm.valid" class="ion-margin-top">
+              Crear Sección
+            </ion-button>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
+      <!-- Lista de secciones para la asignatura seleccionada -->
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Secciones Existentes</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-list>
+            <!-- Mensaje cuando no hay asignatura seleccionada -->
+            <ion-item *ngIf="!seccionForm.get('asignaturaId')?.value">
+              <ion-label>
+                <p>Seleccione una asignatura para ver sus secciones</p>
+              </ion-label>
+            </ion-item>
+
+            <!-- Mensaje cuando no hay secciones -->
+            <ion-item *ngIf="seccionForm.get('asignaturaId')?.value && secciones.length === 0">
+              <ion-label>
+                <p>No hay secciones creadas para esta asignatura</p>
+              </ion-label>
+            </ion-item>
+
+            <!-- Lista de secciones -->
+            <ion-item *ngFor="let seccion of secciones">
+              <ion-label>
+                <h2>Sección {{seccion.codigo}}</h2>
+                <p>Profesor ID: {{seccion.docenteId}}</p>
+              </ion-label>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+
+  <app-tab-menu></app-tab-menu>
+</ion-content>

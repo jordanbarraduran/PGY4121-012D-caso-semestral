@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
-import { User } from '../models/user';
+import { User } from '../models/user.model';
 import { StorageService } from './storage.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ProfileService {
   private storageService = inject(StorageService);
@@ -31,7 +31,7 @@ export class ProfileService {
 
   getFullName(): string {
     if (this.currentUser) {
-      return `${this.currentUser.nombre} ${this.currentUser.apellido}`;
+      return `${this.currentUser.nombre}`;
     }
     return '';
   }

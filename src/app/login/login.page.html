@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" [fullscreen]="true">
   <ion-card class="ion-text-center">
     <ion-card-header>
       <div style="display: flex; justify-content: center; margin-bottom: 20px">
@@ -36,10 +36,10 @@
       <ion-item>
         <ion-input
           type="text"
-          label="Usuario"
+          label="Correo electrónico"
           [(ngModel)]="username"
           labelPlacement="stacked"
-          placeholder="Usuario"
+          placeholder="Correo electrónico"
         ></ion-input>
       </ion-item>
 
@@ -74,14 +74,6 @@
         shape="round"
         (click)="login(username, password)"
         >Iniciar sesión</ion-button
-      >
-
-      <ion-button
-        class="reset-password-button"
-        size="small"
-        fill="clear"
-        (click)="scan()"
-        >testing-scanner</ion-button
       >
     </ion-list>
   </ion-card>

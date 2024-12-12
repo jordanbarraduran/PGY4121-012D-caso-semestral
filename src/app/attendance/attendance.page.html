@@ -1,0 +1,47 @@
+<ion-content [fullscreen]="true">
+  <ion-card class="ion-text-center">
+    <ion-card-header>
+      <ion-card-title class="ion-margin-top">Asistencias</ion-card-title>
+      <ion-card-subtitle></ion-card-subtitle>
+    </ion-card-header>
+
+    <div class="divider"></div>
+
+    <ion-card-content>
+      <ion-list *ngFor="let asistencia of asistencias">
+        <ion-item>
+          <ion-label>
+            <h2>Asignatura</h2>
+            <p>{{ asistencia.claseId }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Fecha</h2>
+            <p>{{ asistencia.timestamp }}</p>
+          </ion-label></ion-item
+        >
+      </ion-list>
+
+      <!-- <ion-accordion-group>
+        <ion-accordion
+          *ngFor="let asignatura of asignaturas"
+          [value]="asignatura.id"
+        >
+          <ion-item slot="header" color="light">
+            <ion-label>{{asignatura.nombre}}</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ul>
+              <li>asistencia</li>
+            </ul>
+          </div>
+        </ion-accordion>
+      </ion-accordion-group> -->
+    </ion-card-content>
+  </ion-card>
+
+  <!-- TABS -->
+  <app-tab-menu></app-tab-menu>
+</ion-content>

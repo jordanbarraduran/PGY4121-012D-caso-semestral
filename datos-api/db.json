@@ -10,7 +10,20 @@
       "password": "123456",
       "role": "estudiante",
       "createdAt": "2024-01-15T08:30:00.000Z",
-      "updatedAt": "2024-01-15T08:30:00.000Z"
+      "updatedAt": "2024-01-15T08:30:00.000Z",
+      "listaAsignaturas": [
+        {
+          "nombreAsignatura": "PGY4121",
+          "seccionAsignatura": "012D",
+          "listaAsistencias": [
+            {
+              "fecha": "",
+              "hora": "",
+              "sala": ""
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "2",
@@ -22,7 +35,20 @@
       "password": "123456",
       "role": "estudiante",
       "createdAt": "2024-02-01T10:15:00.000Z",
-      "updatedAt": "2024-02-10T14:20:00.000Z"
+      "updatedAt": "2024-02-10T14:20:00.000Z",
+      "listaAsignaturas": [
+        {
+          "nombreAsignatura": "PGY4121",
+          "seccionAsignatura": "012D",
+          "listaAsistencias": [
+            {
+              "fecha": "",
+              "hora": "",
+              "sala": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

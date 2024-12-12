@@ -1,0 +1,42 @@
+<ion-tabs>
+  <ion-tab-bar slot="bottom">
+    <!-- ADMIN -->
+    <ion-tab-button
+      *ngIf="currentUser.rol === 'admin'"
+      (click)="this.navigationService.navigateToAdmin()"
+    >
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+      <ion-label>Admin</ion-label>
+    </ion-tab-button>
+    <!-- INICIO -->
+    <ion-tab-button (click)="this.navigationService.navigateToHome()">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Inicio</ion-label>
+    </ion-tab-button>
+    <!-- ESCANER -->
+    <ion-tab-button
+      *ngIf="currentUser.rol === 'docente'"
+      (click)="this.navigationService.navigateToGenerateQR()"
+    >
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>Generar</ion-label>
+    </ion-tab-button>
+    <ion-tab-button
+      *ngIf="!(currentUser.rol === 'docente')"
+      (click)="this.navigationService.openScanner()"
+    >
+      <ion-icon name="qr-code-outline"></ion-icon>
+      <ion-label>Escanear</ion-label>
+    </ion-tab-button>
+    <!-- PERFIL -->
+    <ion-tab-button (click)="this.navigationService.navigateToProfile()">
+      <ion-icon name="person-circle-outline"></ion-icon>
+      <ion-label>Mi perfil</ion-label>
+    </ion-tab-button>
+    <!-- CERRAR SESION -->
+    <ion-tab-button (click)="this.navigationService.logout()">
+      <ion-icon name="log-out-outline"></ion-icon>
+      <ion-label>Cerrar sesión</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-tabs>

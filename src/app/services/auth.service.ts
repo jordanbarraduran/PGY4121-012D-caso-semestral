@@ -5,7 +5,11 @@ import { StorageService } from './storage.service';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { ProfileService } from './profile.service';
-
+import { Auth } from '@angular/fire/auth';
+import { Firestore } from '@angular/fire/firestore';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { User } from '../models/user.model';
+import { doc, getDoc } from 'firebase/firestore';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,31 +18,33 @@ export class AuthService {
   private storage = inject(StorageService);
   private router = inject(Router);
   private profileService = inject(ProfileService);
-  private apiUrl = 'http://localhost:3000/users';
-  
-  constructor() { }
+  // RIGHT URL //
+  private apiUrl =
+    'https://api.jsonbin.io/v3/b/6728e650ad19ca34f8c40232?meta=false';
+  // -------- //
 
-  async login(username: string, password: string) {
-    try {
-      // Get users that match both username and password
-      const response = await firstValueFrom(
-        this.http.get<any[]>(`${this.apiUrl}?username=${username}`)
-      );
-  
-      // Check if we got a user and if the password matches
-      const user = response.find(u => u.password === password);
-      
-      if (user) {
-        console.log('User found:', user);
-        await this.profileService.updateCurrentUser(user);
-        return true;
-      }
-      
-      console.log('Invalid credentials');
-      return false;
-  
-    } catch (error) {
-      console.error('Login error:', error);
+  public response: { users: any[] } | null = null;
+
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore,
+  ) {}
+
+  async login(email: string, password: string) {
+    const result = await signInWithEmailAndPassword(this.auth, email, password);
+    console.log('Login result:', result.user.uid);
+    // Obtener rol del usuario desde Firestore
+    const userDoc = await getDoc(doc(this.firestore, `users/${result.user.uid}`));
+    const currentLoggedInUser = userDoc.data() as User;
+    // añadir uid al objeto de usuario
+    currentLoggedInUser.uid = result.user.uid;
+    console.log('Current user:', currentLoggedInUser);
+
+    if (currentLoggedInUser) {
+      await this.profileService.updateCurrentUser(currentLoggedInUser);
+      return true;
+    } else {
+      console.error('Credenciales inválidas');
       return false;
     }
   }
@@ -48,7 +54,7 @@ export class AuthService {
     await this.profileService.clearCurrentUser();
     this.router.navigate(['/login']);
   }
-  
+
   getCurrentUser() {
     console.log('Getting current user');
     return this.storage.getItem('currentUser');
