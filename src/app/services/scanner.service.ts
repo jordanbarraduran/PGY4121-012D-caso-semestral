@@ -71,11 +71,16 @@ export class ScannerService {
     // IMPLEMENTAR: REGEX PARA VALIDAR FORMATO DE CODIGO QR
 
     // EXTRAER DATOS //
-    // Convertir string en JSON
-    const dataQR = JSON.parse(this.scanResult);
     // Extrae datos del código QR
-    const { claseId, seccionId, horaInicio, horaFin } = dataQR;
+    const [asignatura, seccion, sala, fecha] = this.scanResult.split('|');
+    // Obtiene el ID del estudiante actual
     const estudianteId = this.profileService.getCurrentUser()?.uid;
+    // Crea un string en formato JSON
+    const formatJson = `{"estudianteId":"${estudianteId}","asignatura":"${asignatura}","sala":"${sala}","seccion":"${seccion}","fecha":"${fecha}"}`;
+    // Convierte string en JSON
+    const dataQR = JSON.parse(formatJson);
+
+    /*
     const currentDate = new Date();
     const fecha =
       currentDate.getDate() +
@@ -86,23 +91,24 @@ export class ScannerService {
     const hora = currentDate.getHours() + ':' + currentDate.getMinutes();
     const timestamp = fecha + ' | ' + hora;
 
-    // TESTING //
-    console.log('CLASE ID: ' + claseId);
-    console.log('SECCION ID: ' + seccionId);
-    console.log('HORA INICIO: ' + horaInicio);
-    console.log('HORA FIN: ' + horaFin);
-    console.log('-----------------');
-    // --------------- //
+    */
 
     // Crea una instancia de Asistencia
     if (estudianteId) {
       let nuevaAsistencia: Asistencia = {
-        claseId: claseId,
         estudianteId: estudianteId,
-        timestamp: timestamp,
+        asignatura: asignatura,
+        seccion: seccion,
+        sala: sala,
+        fecha: fecha,
       };
 
-      this.dataService.registrarAsistencia(nuevaAsistencia);
+      try {
+        this.dataService.registrarAsistencia(nuevaAsistencia);
+        console.log('CODIGO ESCANEADO CORRECTAMENTE');
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     /*

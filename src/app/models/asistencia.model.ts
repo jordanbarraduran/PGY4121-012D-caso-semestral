@@ -1,6 +1,10 @@
 export interface Asistencia {
   id?: string;
-  claseId: string;
+  asignatura: string;
+  seccion: string;
+  sala: string;
+  fecha: string;
   estudianteId: string;
-  timestamp: string;
+  //claseId: string;
+  //timestamp: string;
 }

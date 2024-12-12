@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ScannerService } from './scanner.service';
@@ -12,7 +13,7 @@ export class NavigationService {
 
   private router = inject(Router);
 
-  constructor() {}
+  constructor(private confirmDialogController: AlertController) {}
 
   // Cerrar sesión
   async logout() {
@@ -59,5 +60,16 @@ export class NavigationService {
   async navigateToGenerateQR() {
     console.log('FUNCION: navigateToGenerateQR()');
     await this.router.navigateByUrl('/generar');
+  }
+
+  async openConfirmDialog() {
+    const confirmDialogAlert = await this.confirmDialogController.create({
+      header: 'Acción crítica',
+      message:
+        'Una vez ejecutada esta acción, no podrá ser revertida, ¿seguro que desea continuar?',
+      buttons: ['Cancelar', 'Confirmar'],
+    });
+
+    await confirmDialogAlert.present();
   }
 }
