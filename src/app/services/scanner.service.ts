@@ -52,10 +52,18 @@ export class ScannerService {
 
     // Si el permiso es denegado
     if (!isPermissionGranted) {
-      console.log('PERMISO DENEGADO');
+      // Muestra mensaje de error al usuario
+      const errorAlert = await this.scanAlertController.create({
+        header: 'Se requieren permisos',
+        message:
+          'La aplicación necesita acceder a la cámara para escanear el código QR. Por favor, otorga los permisos necesarios y vuelve a intentarlo.',
+        buttons: [{ text: 'Aceptar' }],
+      });
+      await errorAlert.present();
       // Finaliza la ejecución del escáner
       return;
     }
+
     // Instala el plugin de Google
     this.installGoogleBarcodeScannerModule();
 
@@ -80,6 +88,8 @@ export class ScannerService {
     const formatJson = `{"estudianteId":"${estudianteId}","asignatura":"${asignatura}","sala":"${sala}","seccion":"${seccion}","fecha":"${fecha}"}`;
     // Convierte string en JSON
     const dataQR = JSON.parse(formatJson);
+    //
+    let isDuplicated: boolean = false;
 
     /*
     const currentDate = new Date();
@@ -94,6 +104,38 @@ export class ScannerService {
 
     */
 
+    if (estudianteId != undefined) {
+      // Obtiene las asistencias del estudiante
+      const asistencias = await this.dataService.getAsistenciasPorEstudiante(
+        estudianteId
+      );
+
+      // Busca asistencias duplicadas
+      const foundDuplicated = asistencias.filter(
+        (a) => a.asignatura == asignatura && a.fecha == fecha
+      );
+
+      // Valida si encuentra alguna duplicada
+      if (foundDuplicated.length > 0) {
+        isDuplicated = true;
+      }
+    }
+
+    // Si la asistencia es duplicada
+    if (isDuplicated) {
+      console.log('CODIGO DUPLICADO DETECTADO: ');
+      // Muestra mensaje de error al usuario
+      const errorAlert = await this.scanAlertController.create({
+        header: 'Código duplicado',
+        message:
+          'Ya existe una asistencia registrada vinculada al código que está intentando escanear. Sólo puedes escanear un código una sola vez.',
+        buttons: [{ text: 'Aceptar' }],
+      });
+      await errorAlert.present();
+      // Finaliza la ejecución del escáner
+      return;
+    }
+
     // Crea una instancia de Asistencia
     if (estudianteId) {
       let nuevaAsistencia: Asistencia = {
@@ -106,24 +148,30 @@ export class ScannerService {
 
       try {
         // Registra la asistencia en la base de datos
-        this.dataService.registrarAsistencia(nuevaAsistencia);
-        // Muestra mensaje de éxito al usuario
-        const successAlert = await this.scanAlertController.create({
-          header: 'Código escaneado correctamente',
-          message:
-            'El código QR fue escaneado correctamente y su asistencia quedó registrada.',
-          buttons: [{ text: 'Aceptar' }],
-        });
-        await successAlert.present();
+        const registroAsistencia = await this.dataService.registrarAsistencia(
+          nuevaAsistencia
+        );
+
+        if (registroAsistencia) {
+          // Muestra mensaje de éxito al usuario
+          const successAlert = await this.scanAlertController.create({
+            header: 'Código escaneado correctamente',
+            message:
+              'El código QR fue escaneado correctamente y su asistencia quedó registrada.',
+            buttons: [{ text: 'Aceptar' }],
+          });
+          await successAlert.present();
+        }
       } catch (error) {
         // Muestra mensaje de error al usuario
         const errorAlert = await this.scanAlertController.create({
-          header: 'Error al escanear código',
-          message: `Ocurrió el siguiente error al escanear el código QR: [${error}]`,
+          header: 'Error al registrar asistencia',
+          message:
+            'Ocurrió un error al registrar la asistencia. Por favor, revisa que el código QR sea válido y vuelve a intentarlo.',
           buttons: [{ text: 'Aceptar' }],
         });
         await errorAlert.present();
-        console.log(error);
+        throw error;
       }
     }
 
@@ -133,14 +181,6 @@ export class ScannerService {
       (a) =>
         a.nombreAsignatura === asignatura && a.seccionAsignatura === seccion
     );
-
-    if (foundSubject) {
-      // Almacena la instancia en el storage
-      this.storage.setItem('asistencia', asistencia);
-    } else {
-      // IMPLEMENTAR: ALERT
-      console.log('ESTE CODIGO QR NO ES VALIDO PARA ESTE USUARIO');
-    }
     */
   }
 }

@@ -12,6 +12,7 @@ import {
   personCircleOutline,
 } from 'ionicons/icons';
 import { ProfileService } from '../services/profile.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,8 @@ export class HomePage {
   username = this.currentUser?.nombre;
   navigationService = inject(NavigationService);
 
+  private dataService = inject(DataService);
+
   // Variables | Asistencia //
   // listaAsignaturas = this.currentUser?.listaAsignaturas;
 
@@ -38,6 +41,28 @@ export class HomePage {
       'log-out-outline': logOutOutline,
       'person-circle-outline': personCircleOutline,
     });
+  }
+
+  async testing() {
+    let isDuplicated: boolean = false;
+
+    if (this.currentUser?.uid != undefined) {
+      const asistencias = await this.dataService.getAsistenciasPorEstudiante(
+        this.currentUser?.uid
+      );
+
+      const foundDuplicated = asistencias.filter(
+        (a) => a.asignatura == 'PGY4121' && a.fecha == '20241104'
+      );
+
+      console.log(foundDuplicated.length);
+
+      if (foundDuplicated.length > 0) {
+        isDuplicated = true;
+      }
+
+      console.log(isDuplicated);
+    }
   }
 
   async unavailableFunctionToast() {
