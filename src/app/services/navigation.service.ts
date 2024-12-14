@@ -40,6 +40,10 @@ export class NavigationService {
     await confirmDialogAlert.present();
   }
 
+  async navigateToHorario() {
+    await this.router.navigateByUrl('/horario');
+  }
+
   // Navegar | Vista Recuperar Contraseña
   async navigateToPasswordReset() {
     console.log('FUNCION: navigateToPasswordReset()');

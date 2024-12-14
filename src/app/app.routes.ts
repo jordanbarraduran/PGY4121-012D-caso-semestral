@@ -46,6 +46,12 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./generar/generar.page').then((m) => m.GenerarPage),
   },
+  {
+    path: 'horario',
+    loadComponent: () =>
+      import('./horario/horario.page').then((m) => m.HorarioPage),
+  },
+
   // IMPORTANTE: NotFound debe ser el último path de la lista, sino sobreescribe a los demás //
   {
     path: '**',

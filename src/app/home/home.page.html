@@ -23,16 +23,6 @@
     ></div>
 
     <ion-card-content>
-      <ion-button
-        class="ion-margin-bottom"
-        expand="block"
-        shape="round"
-        color="light"
-        (click)="testing()"
-      >
-        TESTING
-      </ion-button>
-
       <!-- BUTTON | ESCANER -->
       <ion-button
         class="ion-margin-bottom"
@@ -60,7 +50,7 @@
         shape="round"
         class="ion-margin-bottom"
         color="secondary"
-        (click)="unavailableFunctionToast()"
+        (click)="this.navigationService.navigateToHorario()"
       >
         <ion-icon name="time-outline" slot="start"></ion-icon>
         Mi horario

@@ -44,25 +44,7 @@ export class HomePage {
   }
 
   async testing() {
-    let isDuplicated: boolean = false;
-
-    if (this.currentUser?.uid != undefined) {
-      const asistencias = await this.dataService.getAsistenciasPorEstudiante(
-        this.currentUser?.uid
-      );
-
-      const foundDuplicated = asistencias.filter(
-        (a) => a.asignatura == 'PGY4121' && a.fecha == '20241104'
-      );
-
-      console.log(foundDuplicated.length);
-
-      if (foundDuplicated.length > 0) {
-        isDuplicated = true;
-      }
-
-      console.log(isDuplicated);
-    }
+    console.log('testing method');
   }
 
   async unavailableFunctionToast() {
