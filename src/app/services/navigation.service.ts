@@ -40,6 +40,24 @@ export class NavigationService {
     await confirmDialogAlert.present();
   }
 
+  async confirmLogout() {
+    const confirmDialogAlert = await this.confirmDialogController.create({
+      header: 'Cierre de sesión',
+      message:
+        '¿Está seguro que desea cerrar sesión?',
+      buttons: [
+        { text: 'No', role: 'cancel' },
+        {
+          text: 'Cerrar Sesión',
+          handler: () => {
+            this.logout();
+          },
+        },
+      ],
+    });
+    await confirmDialogAlert.present();
+  }
+
   async navigateToHorario() {
     await this.router.navigateByUrl('/horario');
   }

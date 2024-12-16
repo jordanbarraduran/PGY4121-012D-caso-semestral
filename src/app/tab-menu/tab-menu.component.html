@@ -9,7 +9,9 @@
       <ion-label>Admin</ion-label>
     </ion-tab-button>
     <!-- INICIO -->
-    <ion-tab-button (click)="this.navigationService.navigateToHome()">
+    <ion-tab-button
+      *ngIf="!(currentUser.rol === 'admin')"
+      (click)="this.navigationService.navigateToHome()">
       <ion-icon name="home-outline"></ion-icon>
       <ion-label>Inicio</ion-label>
     </ion-tab-button>
@@ -22,7 +24,7 @@
       <ion-label>Generar</ion-label>
     </ion-tab-button>
     <ion-tab-button
-      *ngIf="!(currentUser.rol === 'docente')"
+      *ngIf="currentUser.rol === 'estudiante'"
       (click)="this.navigationService.openScanner()"
     >
       <ion-icon name="qr-code-outline"></ion-icon>
@@ -34,7 +36,7 @@
       <ion-label>Mi perfil</ion-label>
     </ion-tab-button>
     <!-- CERRAR SESION -->
-    <ion-tab-button (click)="this.navigationService.logout()">
+    <ion-tab-button (click)="this.navigationService.confirmLogout()">
       <ion-icon name="log-out-outline"></ion-icon>
       <ion-label>Cerrar sesión</ion-label>
     </ion-tab-button>
